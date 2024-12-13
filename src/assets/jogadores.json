@@ -1,0 +1,94 @@
+{
+  "jogadores": [
+      {
+          "nome": "FLAVIN",
+          "nota": 9.2,
+          "coroa": false,
+          "img":"https://i.ibb.co/yqMPxMH/Flavin.png"
+      },
+      {
+          "nome": "LÉO COLOMBO",
+          "nota": 9.8,
+          "coroa": false,
+          "img":"https://i.ibb.co/1ZGrGg8/L-o-colombo.png"
+      },
+      {
+          "nome": "MARKIM",
+          "nota": 8.8,
+          "coroa": false,
+          "img":"https://i.ibb.co/8zRvvVR/Markim.png"
+      },
+      {
+          "nome": "JUNIN",
+          "nota": 8.6,
+          "coroa": false,
+          "img":"https://i.ibb.co/dtnpkny/Junin.png"
+      },
+      {
+          "nome": "CAÇA RATO",
+          "nota": 8.4,
+          "coroa": false,
+          "img":"https://i.ibb.co/2KqM87k/ca-a-rato.png"
+      },
+      {
+          "nome": "TIGUIM",
+          "nota": 7.4,
+          "coroa": false,
+          "img":"https://i.ibb.co/WWX681R/Tiguim.png"
+      },
+      {
+          "nome": "WEYDER",
+          "nota": 7.2,
+          "coroa": false,
+          "img":"https://i.ibb.co/v4qzSFy/Weyder.png"
+      },
+      {
+          "nome": "ALMIR",
+          "nota": 7.2,
+          "coroa": false,
+          "img":"https://i.ibb.co/ByXgCFG/Almir.png"
+      },
+      {
+          "nome": "MARCUS",
+          "nota": 6.8,
+          "coroa": false,
+          "img":"https://i.ibb.co/BPXFBPw/Marcus.png"
+      },
+      {
+          "nome": "ALLESON",
+          "nota": 7,
+          "coroa": false,
+          "img":"https://i.ibb.co/f151WNg/siluieta-sf.png"
+      },
+      {
+          "nome": "FELIPE",
+          "nota": 6,
+          "coroa": false,
+          "img":"https://i.ibb.co/LgfvBTb/Felipe.png"
+      },
+      {
+          "nome": "A9",
+          "nota": 5.6,
+          "coroa": false,
+          "img":"https://i.ibb.co/6yD2mxq/Augusto.png"
+      },
+      {
+          "nome": "BEBE LEITE",
+          "nota": 5.8,
+          "coroa": true,
+          "img":"https://i.ibb.co/XYgkTCC/bebe-leite.png"
+      },
+      {
+          "nome": "ZÉ RONILDO",
+          "nota": 5,
+          "coroa": true,
+          "img":"https://i.ibb.co/L0rFFtL/z-ronildo.png"
+      },
+      {
+          "nome": "SEBASTIAO",
+          "nota": 5.2,
+          "coroa": true,
+          "img":"https://i.ibb.co/yVjbPyT/Coroa.png"
+      }
+  ]
+}

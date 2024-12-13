@@ -1,0 +1,74 @@
+body{
+  background-color: #d9d9d9;
+}
+
+.container {
+  padding: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.time-card {
+  /* border: 1px solid #ccc; */
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+}
+
+h3 {
+  margin-bottom: 10px;
+}
+
+.gramado {
+  width: 974px;
+  height: 439px;
+  background-image: url("https://i.ibb.co/cCHbhGk/Futebol-Campo-de-Futebol-2-PNG.png");
+  background-size: cover;
+  position: relative; /* Necessário para posicionamento absoluto dos jogadores */
+}
+
+.player {
+  width: 111px;
+  height: 113px;
+  position: absolute;
+  display: inline-block;
+  border-radius: 54%;
+}
+
+/* Posicionando cada jogador */
+.player1 {
+  top: 0px;
+  left: 430px;
+}
+
+.player2 {
+  top: 78px;
+  left: 253px;
+}
+
+.player3 {
+  top: 184px;
+  left: 310px;
+}
+
+.player4 {
+  top: 76px;
+  left: 604px;
+}
+
+.player5 {
+  top: 185px;
+  left: 552px;
+}
