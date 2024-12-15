@@ -37,6 +37,7 @@ h3 {
   background-image: url("https://i.ibb.co/cCHbhGk/Futebol-Campo-de-Futebol-2-PNG.png");
   background-size: cover;
   position: relative; /* Necessário para posicionamento absoluto dos jogadores */
+  margin: auto;
 }
 
 .player {
@@ -71,4 +72,38 @@ h3 {
 .player5 {
   top: 185px;
   left: 552px;
+}
+
+
+/* RESPONSIVIDADE MOBILE */
+
+@media only screen and (max-width: 600px) {
+  .gramado {
+    width: 300px;
+    height: 120px;
+  }
+  .player1 {
+    top: 0px;
+    left: 160px;
+  }
+  .player {
+    width: 48px;
+    height: 46px;
+  }
+  .player2 {
+    top: 48px;
+    left: 203px;
+  }
+  .player3 {
+    top: 50px;
+    left: 50px;
+  }
+  .player4 {
+    top: 0px;
+    left: 90px;
+  }
+  .player5 {
+    top: 35px;
+    left: 130px;
+  }
 }

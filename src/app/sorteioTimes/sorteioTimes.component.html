@@ -2,65 +2,79 @@
 
   <div class="text-center">
     <h1>
-      Gerador de times - PELADA DE QUINTA
+      Gerador de times <br> PELADA DE QUINTA
     </h1>
   </div>
 
-  <div class="col-9">
-    <div class="row">
-      <div class="col-9">
-        <h2>Trocar Jogador</h2>
-        <form (ngSubmit)="onTrocarJogador()">
-          <div class="col-4 pb-2">
-            <label for="nomeAntigo">Nome do Jogador Antigo:</label>
-            <input class="form-control" type="text" id="nomeAntigo" [(ngModel)]="nomeAntigo" name="nomeAntigo" required />
-          </div>
-
-          <div class="col-12 row">
-            <div class="col-6">
-              <label for="nomeNovo">Nome do Novo Jogador:</label>
-              <input class="form-control" type="text" id="nomeNovo" [(ngModel)]="novoJogador.nome" name="nomeNovo" required />
-            </div>
-            <div class="col-5">
-              <label for="notaNova">Nota do Novo Jogador:</label>
-              <input class="form-control" type="number" id="notaNova" [(ngModel)]="novoJogador.nota" name="notaNova" required />
-            </div>
-          </div>
-
-          <div class="col-12 pt-2">
-            <button class="btn btn-secondary" type="submit">Trocar Jogador</button>
-          </div>
-        </form>
-      </div>
-      <div *ngIf="!jaGerouTimes" class="col-3">
-        <img src="https://i.ibb.co/MfRZDpz/LOGO-PELADA.png" alt="" srcset="">
-      </div>
+  <div class="col-12">
+    <div *ngIf="!jaGerouTimes" class="col-12 d-flex justify-content-center">
+      <img src="https://i.ibb.co/MfRZDpz/LOGO-PELADA.png" width="300" height="300">
     </div>
+  </div>
 
-    <div class="col-2 d-grid gap-2 row">
+  <hr>
+
+  <div class="col-12">
+    <h2>Trocar Jogador</h2>
+    <form (ngSubmit)="onTrocarJogador()">
+      <div class="col-12 pb-2">
+        <label for="nomeAntigo">Nome do Jogador Antigo:</label>
+        <input class="form-control" type="text" id="nomeAntigo" [(ngModel)]="nomeAntigo" name="nomeAntigo" required />
+      </div>
+
+      <div class="col-12">
+        <div class="col-12 pb-2">
+          <label for="nomeNovo">Nome do Novo Jogador:</label>
+          <input class="form-control" type="text" id="nomeNovo" [(ngModel)]="novoJogador.nome" name="nomeNovo" required />
+        </div>
+        <div class="col-12 pb-2">
+          <label for="notaNova">Nota do Novo Jogador:</label>
+          <input class="form-control" type="number" id="notaNova" [(ngModel)]="novoJogador.nota" name="notaNova" required />
+        </div>
+      </div>
+
+      <div class="d-grid gap-2 pt-2">
+        <button class="btn btn-secondary" type="submit">Trocar Jogador</button>
+      </div>
+    </form>
+  </div>
+
+  <hr>
+
+  <div class="col-12">
+    <div class="d-grid gap-2">
       <button class="btn btn-block btn-success pr-2" (click)="gerarTimes()">Gerar Times</button>
-      <button class="btn btn-block btn-primary pr-2" (click)="salvar()">Salvar</button>
+      <button *ngIf="jaGerouTimes" class="btn btn-block btn-primary pr-2" (click)="salvar()">Salvar</button>
     </div>
-    <div *ngIf="times.length > 0" id="teste" class="testec">
-      <div class="row">
-        <div *ngIf="jaGerouTimes" class="pb-3" style="display: flex; justify-content: center;">
-          <img src="https://i.ibb.co/MfRZDpz/LOGO-PELADA.png" width="200" height="200" alt="" srcset="">
+  </div>
+
+  <hr>
+
+  <div class="col-12">
+    <div *ngIf="jaGerouTimes" class="col-12 pb-3 d-flex justify-content-center">
+      <img src="https://i.ibb.co/MfRZDpz/LOGO-PELADA.png" width="200" height="200" alt="" srcset="">
+    </div>
+
+
+    <div *ngIf="times.length > 0" id="teste" class="testec col-12">
+      <hr>
+      <div *ngFor="let time of times;  index as i" id="timesCriados{{i}}" class="time-card col-12 pb-0 mb-0">
+        <div class="text-center">
+          <h3>{{ time.nome }}</h3>
         </div>
-        <hr>
-      </div>
-      <div *ngFor="let time of times;  index as i" id="timesCriados{{i}}" class="time-card col-12">
-        <div class="row">
-          <div class="col-3">
-            <h3>{{ time.nome }}</h3>
-            <ul>
-              <li *ngFor="let jogador of time.jogadores">{{ jogador }}</li>
-            </ul>
-          </div>
-          <div class="col-9">
-            <img class="pl-2" [src]="emblemasTimes[i]" width="250" height="250" style="margin-left: 50px;"><br>
-          </div>
+
+        <div *ngFor="let jogador of time.jogadores" class="text-center">
+          <span >{{ jogador }}</span><br>
         </div>
-        <h2><b>Nota total: {{ time.nota | number: '1.2-2' }}</b></h2>
+
+        <div class="col-12 d-flex justify-content-center">
+          <img [src]="emblemasTimes[i]" width="250" height="250"><br>
+        </div>
+
+        <div class="text-center">
+          <h2><b>Nota total: {{ time.nota | number: '1.2-2' }}</b></h2>
+        </div>
+
         <div class="gramado">
           <img [src]="time.imagem[0]" alt="Jogador 1" class="player player1">
           <img [src]="time.imagem[1]" alt="Jogador 2" class="player player2">
@@ -68,9 +82,8 @@
           <img [src]="time.imagem[3]" alt="Jogador 4" class="player player4">
           <img [src]="time.imagem[4]" alt="Jogador 5" class="player player5">
         </div>
-        <hr *ngIf="i < times.length" class="mt-4" style="width: 77%;">
+        <hr *ngIf="i < times.length">
       </div>
-      <img src="https://i.ibb.co/c8R72df/parceiros.png" style="width: 1000px;">
     </div>
   </div>
 </div>
