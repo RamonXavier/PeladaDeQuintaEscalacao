@@ -59,16 +59,17 @@
     <div *ngIf="times.length > 0" id="teste" class="testec col-12">
       <hr>
       <div *ngFor="let time of times;  index as i" id="timesCriados{{i}}" class="time-card col-12 pb-0 mb-0">
+
+        <div class="col-12 d-flex justify-content-center">
+          <img [src]="emblemasTimes[i]" width="250" height="250"><br>
+        </div>
+
         <div class="text-center">
           <h3>{{ time.nome }}</h3>
         </div>
 
         <div *ngFor="let jogador of time.jogadores" class="text-center">
           <span >{{ jogador }}</span><br>
-        </div>
-
-        <div class="col-12 d-flex justify-content-center">
-          <img [src]="emblemasTimes[i]" width="250" height="250"><br>
         </div>
 
         <div class="text-center">
