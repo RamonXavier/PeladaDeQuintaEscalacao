@@ -32,7 +32,7 @@ export class SorteioTimesComponent implements OnInit {
   public editandoJogadores: boolean = false;
   public jogadores: Jogador[] = [];
   public times: Time[] = [];
-  public imagemAvulso = 'https://sportrenders.com/wp-content/uploads/2023/10/Cristiano-Ronaldo-Render-PNG-Al-Nassr-Image-Sport-Renders-1.png';
+  public imagemAvulso = 'https://i.ibb.co/DKgB6RP/cris.png';
   public emblemasTimes: any[] =
   [
     'https://i.ibb.co/PD1p9rT/boleiros-1.png',
