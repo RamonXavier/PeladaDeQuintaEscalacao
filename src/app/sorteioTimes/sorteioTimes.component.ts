@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import jogadoresData from './../../assets/jogadores.json';
 import html2canvas from 'html2canvas';
+import { ToastrService } from 'ngx-toastr';
 
 interface Jogador {
   id: number;
@@ -13,7 +14,7 @@ interface Jogador {
 
 interface Time {
   nome: string;
-  jogadores: string[];
+  jogadores: Jogador[];
   nota: number;
   imagem: string[];
 }
@@ -31,12 +32,17 @@ export class SorteioTimesComponent implements OnInit {
   public editandoJogadores: boolean = false;
   public jogadores: Jogador[] = [];
   public times: Time[] = [];
+  public imagemAvulso = 'https://sportrenders.com/wp-content/uploads/2023/10/Cristiano-Ronaldo-Render-PNG-Al-Nassr-Image-Sport-Renders-1.png';
   public emblemasTimes: any[] =
   [
     'https://i.ibb.co/PD1p9rT/boleiros-1.png',
     'https://i.ibb.co/7zrnZLD/chuta-1.png',
     'https://i.ibb.co/2q5D9Vr/donos-1.png'
   ];
+
+  constructor (private toastr: ToastrService){
+
+  }
 
 
   ngOnInit(): void {
@@ -52,12 +58,14 @@ export class SorteioTimesComponent implements OnInit {
     const jogadoresComuns = this.jogadores.filter((j) => !j.coroa);
 
     if (jogadoresCoroas.length < 3) {
-      console.error('Número insuficiente de jogadores coroas!');
+      this.toastr.error('Número insuficiente de jogadores coroas', '😢Ops!');
+      this.toastr.error('Entre em contato com o caça rato.', '');
       return;
     }
 
     if (jogadoresComuns.length < 12) {
-      console.error('Número insuficiente de jogadores comuns!');
+      this.toastr.error('Número insuficiente de jogadores comuns', '😢Ops!');
+      this.toastr.error('Entre em contato com o caça rato.', '');
       return;
     }
 
@@ -74,6 +82,7 @@ export class SorteioTimesComponent implements OnInit {
 
     this.jaGerouTimes = true;
     this.times = timesPadrao;
+    this.toastr.success('Os 3 times foram criados', '🚀Tudo certo!🚀');
   }
 
   private distribuirJogadoresCoroasNosTimes(timesPadrao: Time[], jogadoresCoroas: Jogador[]):void {
@@ -85,7 +94,7 @@ export class SorteioTimesComponent implements OnInit {
       const jogadorCoroa = jogadoresCoroasDisponiveis.splice(Math.floor(Math.random() * jogadoresCoroasDisponiveis.length), 1)[0];
       jogadoresCoroasJaSelecionados.push(jogadorCoroa.id);
 
-      timesPadrao[i].jogadores.push(jogadorCoroa.nome + ' / Pote:' + jogadorCoroa.pote);
+      timesPadrao[i].jogadores.push(jogadorCoroa);
       timesPadrao[i].imagem.push(jogadorCoroa.img);
       timesPadrao[i].nota += jogadorCoroa.nota;
     }
@@ -106,7 +115,7 @@ export class SorteioTimesComponent implements OnInit {
         jogadoresNormaisJaSelecionados.push(jogadorParaAdicionarAoTime.id);
         potesJaAdicionados.push(jogadorParaAdicionarAoTime.pote);
 
-        timePercorrido.jogadores.push(jogadorParaAdicionarAoTime.nome + ' / Pote:' + jogadorParaAdicionarAoTime.pote);
+        timePercorrido.jogadores.push(jogadorParaAdicionarAoTime);
         timePercorrido.imagem.push(jogadorParaAdicionarAoTime.img);
         timePercorrido.nota += jogadorParaAdicionarAoTime.nota;
       }
@@ -130,6 +139,7 @@ export class SorteioTimesComponent implements OnInit {
 
   public editarJogadores(novosJogadores: Jogador[]): void{
     this.jogadores = novosJogadores;
+    this.toastr.success('Os jogadores foram editados', '🚀Tudo certo!🚀');
   }
 
   private downloadImage(dataUrl: string, filename: string): void {
@@ -137,5 +147,24 @@ export class SorteioTimesComponent implements OnInit {
     link.href = dataUrl;
     link.download = filename;
     link.click();
+  }
+
+  public alterarImagemJogador(id: number): void{
+
+    this.jogadores.forEach(jogador => {
+          if(jogador.id == id){
+            let novoJogador: Jogador = {
+              id: jogador.id,
+              img: 'https://sportrenders.com/wp-content/uploads/2023/10/Cristiano-Ronaldo-Render-PNG-Al-Nassr-Image-Sport-Renders-1.png',
+              nome: jogador?.nome,
+              coroa: jogador.coroa,
+              nota: jogador?.nota,
+              pote: jogador?.pote
+            }
+            jogador = novoJogador;
+          }
+    });
+
+    this.times = [];
   }
 }

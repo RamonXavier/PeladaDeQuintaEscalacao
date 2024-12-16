@@ -1,3 +1,5 @@
+@import 'ngx-toastr/toastr';
+
 body{
   background-color: #d9d9d9;
 }
@@ -46,6 +48,8 @@ h3 {
   position: absolute;
   display: inline-block;
   border-radius: 54%;
+  background-image: url("https://futcardsfifa.com/app/uploads/2022/08/WEB-TEAM-OF-THE-WEEK-GOLD-T23.png");
+  background-size: cover;
 }
 
 /* Posicionando cada jogador */
@@ -60,18 +64,59 @@ h3 {
 }
 
 .player3 {
-  top: 184px;
+  top: 197px;
   left: 310px;
 }
 
 .player4 {
-  top: 76px;
-  left: 604px;
+  top: 71px;
+  left: 607px;
 }
 
 .player5 {
-  top: 185px;
+  top: 198px;
   left: 552px;
+}
+
+.playerName {
+  position: absolute;
+  display: inline-block;
+  font-weight: bold;
+  color: #FFFFFF;
+  /* background: #232323; */
+  text-shadow: 0 0 5px #FFF,
+  0 0 10px #FFF,
+  0 0 15px #FFF,
+  0 0 20px #000000,
+  0 0 30px #060606,
+  0 0 40px #49FF18,
+  0 0 55px #49FF18,
+  0 0 75px #49ff18;
+}
+
+.playerName1 {
+  top: 112px;
+  left: 443px;
+}
+
+.playerName2 {
+  top: 188px;
+  left: 271px;
+}
+
+.playerName3 {
+  top: 311px;
+  left: 327px;
+}
+
+.playerName4 {
+  top: 184px;
+  left: 621px;
+}
+
+.playerName5 {
+  top: 310px;
+  left: 578px;
 }
 
 
@@ -91,11 +136,11 @@ h3 {
     height: 46px;
   }
   .player2 {
-    top: 48px;
+    top: 58px;
     left: 203px;
   }
   .player3 {
-    top: 50px;
+    top: 58px;
     left: 50px;
   }
   .player4 {
@@ -103,7 +148,37 @@ h3 {
     left: 90px;
   }
   .player5 {
-    top: 35px;
+    top: 49px;
     left: 130px;
+  }
+
+  .playerName1 {
+    top: 44px;
+    left: 167px;
+  }
+
+  .playerName2 {
+    top: 102px;
+    left: 203px;
+  }
+
+  .playerName3 {
+    top: 103px;
+    left: 50px;
+  }
+
+  .playerName4 {
+    top: 45px;
+    left: 93px;
+  }
+
+  .playerName5 {
+    top: 92px;
+    left: 130px;
+  }
+  .playerName {
+    FONT-SIZE: 7.5px;
+    color: #FFFFFF;
+    text-shadow: none;
   }
 }
