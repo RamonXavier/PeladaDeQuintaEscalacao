@@ -1,94 +1,124 @@
 {
   "jogadores": [
       {
+          "id": 1,
           "nome": "FLAVIN",
           "nota": 9.2,
           "coroa": false,
-          "img":"https://i.ibb.co/yqMPxMH/Flavin.png"
+          "img":"https://i.ibb.co/yqMPxMH/Flavin.png",
+          "pote":1
       },
       {
+          "id": 2,
           "nome": "LÉO COLOMBO",
           "nota": 9.8,
           "coroa": false,
-          "img":"https://i.ibb.co/1ZGrGg8/L-o-colombo.png"
+          "img":"https://i.ibb.co/1ZGrGg8/L-o-colombo.png",
+          "pote":1
       },
       {
-          "nome": "MARKIM",
-          "nota": 8.8,
-          "coroa": false,
-          "img":"https://i.ibb.co/8zRvvVR/Markim.png"
-      },
-      {
-          "nome": "JUNIN",
-          "nota": 8.6,
-          "coroa": false,
-          "img":"https://i.ibb.co/dtnpkny/Junin.png"
-      },
-      {
+          "id": 3,
           "nome": "CAÇA RATO",
           "nota": 8.4,
           "coroa": false,
-          "img":"https://i.ibb.co/2KqM87k/ca-a-rato.png"
+          "img":"https://i.ibb.co/2KqM87k/ca-a-rato.png",
+          "pote":1
       },
       {
+          "id": 4,
+          "nome": "MARKIM",
+          "nota": 8.8,
+          "coroa": false,
+          "img":"https://i.ibb.co/8zRvvVR/Markim.png",
+          "pote":2
+      },
+      {
+          "id": 5,
+          "nome": "JUNIN",
+          "nota": 8.6,
+          "coroa": false,
+          "img":"https://i.ibb.co/dtnpkny/Junin.png",
+          "pote":2
+      },
+      {
+          "id": 6,
           "nome": "TIGUIM",
           "nota": 7.4,
           "coroa": false,
-          "img":"https://i.ibb.co/WWX681R/Tiguim.png"
+          "img":"https://i.ibb.co/WWX681R/Tiguim.png",
+          "pote":2
       },
       {
+          "id": 7,
           "nome": "WEYDER",
           "nota": 7.2,
           "coroa": false,
-          "img":"https://i.ibb.co/v4qzSFy/Weyder.png"
+          "img":"https://i.ibb.co/v4qzSFy/Weyder.png",
+          "pote":3
       },
       {
+          "id": 8,
           "nome": "ALMIR",
           "nota": 7.2,
           "coroa": false,
-          "img":"https://i.ibb.co/ByXgCFG/Almir.png"
+          "img":"https://i.ibb.co/ByXgCFG/Almir.png",
+          "pote":3
       },
       {
+          "id": 9,
           "nome": "MARCUS",
           "nota": 6.8,
           "coroa": false,
-          "img":"https://i.ibb.co/BPXFBPw/Marcus.png"
+          "img":"https://i.ibb.co/BPXFBPw/Marcus.png",
+          "pote":3
       },
       {
+          "id": 10,
           "nome": "ALLESON",
           "nota": 7,
           "coroa": false,
-          "img":"https://i.ibb.co/f151WNg/siluieta-sf.png"
+          "img":"https://i.ibb.co/f151WNg/siluieta-sf.png",
+          "pote":4
       },
       {
+          "id": 11,
           "nome": "FELIPE",
           "nota": 6,
           "coroa": false,
-          "img":"https://i.ibb.co/LgfvBTb/Felipe.png"
+          "img":"https://i.ibb.co/LgfvBTb/Felipe.png",
+          "pote":4
       },
       {
+          "id": 12,
           "nome": "A9",
           "nota": 5.6,
           "coroa": false,
-          "img":"https://i.ibb.co/6yD2mxq/Augusto.png"
+          "img":"https://i.ibb.co/6yD2mxq/Augusto.png",
+          "pote":4
       },
       {
+          "id": 13,
           "nome": "BEBE LEITE",
           "nota": 5.8,
           "coroa": true,
-          "img":"https://i.ibb.co/XYgkTCC/bebe-leite.png"
+          "img":"https://i.ibb.co/XYgkTCC/bebe-leite.png",
+          "pote":5
       },
       {
+          "id": 14,
           "nome": "ZÉ RONILDO",
           "nota": 5,
           "coroa": true,
-          "img":"https://i.ibb.co/L0rFFtL/z-ronildo.png"
+          "img":"https://i.ibb.co/L0rFFtL/z-ronildo.png",
+          "pote":5
       },
       {
+          "id": 15,
           "nome": "SEBASTIAO",
           "nota": 5.2,
           "coroa": true,
-          "img":"https://i.ibb.co/yVjbPyT/Coroa.png"
+          "img":"https://i.ibb.co/yVjbPyT/Coroa.png",
+          "pote":5
       }
   ]
 }

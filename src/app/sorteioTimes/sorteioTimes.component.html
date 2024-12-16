@@ -15,28 +15,44 @@
   <hr>
 
   <div class="col-12">
-    <h2>Trocar Jogador</h2>
-    <form (ngSubmit)="onTrocarJogador()">
-      <div class="col-12 pb-2">
-        <label for="nomeAntigo">Nome do Jogador Antigo:</label>
-        <input class="form-control" type="text" id="nomeAntigo" [(ngModel)]="nomeAntigo" name="nomeAntigo" required />
-      </div>
+    <button class="btn btn-primary" (click)="editandoJogadores = !editandoJogadores" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      {{editandoJogadores ? 'Fechar edição de jogadores' : 'Abrir edição de jogadores'}}
+    </button>
 
-      <div class="col-12">
-        <div class="col-12 pb-2">
-          <label for="nomeNovo">Nome do Novo Jogador:</label>
-          <input class="form-control" type="text" id="nomeNovo" [(ngModel)]="novoJogador.nome" name="nomeNovo" required />
-        </div>
-        <div class="col-12 pb-2">
-          <label for="notaNova">Nota do Novo Jogador:</label>
-          <input class="form-control" type="number" id="notaNova" [(ngModel)]="novoJogador.nota" name="notaNova" required />
-        </div>
-      </div>
+    <div class="collapse" id="collapseExample">
+      <div class="card card-body">
+        <h2>Trocar jogadores</h2>
+        <div *ngFor="let jogador of jogadores;  index as i">
+            <div class="row">
+              <div class="col-1">
+                <label for="numero">Nº:</label>
+                <input class="form-control" type="text" id="numero" [(ngModel)]="jogador.id" name="numero" required disabled/>
+              </div>
 
-      <div class="d-grid gap-2 pt-2">
-        <button class="btn btn-secondary" type="submit">Trocar Jogador</button>
+              <div class="col-7">
+                <label for="nome">Nome do Jogador:</label>
+                <input class="form-control" type="text" id="nome" [(ngModel)]="jogador.nome" name="nome" required />
+              </div>
+
+              <div class="col-2">
+                <label for="nota">Nota:</label>
+                <input class="form-control" type="number" id="nota" [(ngModel)]="jogador.nota" name="nota" required />
+              </div>
+
+              <div class="col-2">
+                <label for="pote">Pote:</label>
+                <input class="form-control" type="number" id="pote" [(ngModel)]="jogador.pote" name="pote" required disabled="true" />
+              </div>
+            </div>
+            <hr *ngIf="i < jogadores.length">
+        </div>
+        <div class="d-grid gap-2 pt-2">
+          <button class="btn btn-secondary"  data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" type="button" (click)="editarJogadores(jogadores); editandoJogadores = !editandoJogadores">
+            Finalizar edição
+          </button>
+        </div>
       </div>
-    </form>
+    </div>
   </div>
 
   <hr>
