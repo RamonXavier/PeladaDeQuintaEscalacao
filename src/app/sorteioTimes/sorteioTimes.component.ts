@@ -1,3 +1,4 @@
+import { AniversariantesBackground } from './../../backgrounds/aniversariantes.background';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import jogadoresData from './../../assets/jogadores.json';
 import html2canvas from 'html2canvas';
@@ -40,7 +41,7 @@ export class SorteioTimesComponent implements OnInit {
     'https://i.ibb.co/2q5D9Vr/donos-1.png'
   ];
 
-  constructor (private toastr: ToastrService){
+  constructor (private toastr: ToastrService, private aniversariantesBackground: AniversariantesBackground){
 
   }
 
