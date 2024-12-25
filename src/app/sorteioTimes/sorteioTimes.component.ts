@@ -33,6 +33,7 @@ export class SorteioTimesComponent implements OnInit {
   public editandoJogadores: boolean = false;
   public jogadores: Jogador[] = [];
   public times: Time[] = [];
+  public imagemCardFifa: string = "https://i.ibb.co/3Nw177S/card-fifa.png";
   public imagemAvulso = 'https://i.ibb.co/DKgB6RP/cris.png';
   public emblemasTimes: any[] =
   [

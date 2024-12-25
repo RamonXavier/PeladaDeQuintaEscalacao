@@ -48,8 +48,12 @@ h3 {
   position: absolute;
   display: inline-block;
   border-radius: 54%;
-  background-image: url("https://futcardsfifa.com/app/uploads/2022/08/WEB-TEAM-OF-THE-WEEK-GOLD-T23.png");
+  background-image: url("https://i.ibb.co/3Nw177S/card-fifa.png");
   background-size: cover;
+}
+
+.playerImg {
+  z-index: 2;
 }
 
 /* Posicionando cada jogador */
