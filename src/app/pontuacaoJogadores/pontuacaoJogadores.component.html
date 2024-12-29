@@ -1,0 +1,94 @@
+<div class="container">
+
+  <div class="text-center">
+    <h1>
+      Pontuação de jogadores <br> PELADA DE QUINTA
+    </h1>
+  </div>
+
+  <div class="col-12">
+    <div *ngIf="!jaGerouNota" class="col-12 d-flex justify-content-center">
+      <img src="https://i.ibb.co/MfRZDpz/LOGO-PELADA.png" width="300" height="300">
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="d-grid gap-2 pt-3">
+      <button class="btn btn-primary btn-block" (click)="editandoJogadores = !editandoJogadores" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        {{editandoJogadores ? 'Fechar edição de jogadores' : 'Abrir edição de jogadores'}}
+      </button>
+    </div>
+
+    <div class="collapse" id="collapseExample">
+      <div class="card card-body">
+        <h2>Trocar jogadores</h2>
+        <div *ngFor="let jogador of jogadores;  index as i">
+            <div class="row">
+              <div class="col-sm-1 col-6">
+                <label for="numero">Nº:</label>
+                <input class="form-control" type="text" id="numero" [(ngModel)]="jogador.id" name="numero" required disabled/>
+              </div>
+
+              <div class="col-sm-3 col-6">
+                <label for="nome">Nome do Jogador:</label>
+                <input class="form-control" (keyup)="jogador.img = imagemAvulso" type="text" id="nome" [(ngModel)]="jogador.nome" name="nome" required />
+              </div>
+
+              <div class="col-sm-4 col-6">
+                <label for="nota">Pontuação:</label>
+                <input class="form-control" type="number" id="nota" [(ngModel)]="jogador.nota" name="nota" required />
+              </div>
+
+              <div class="col-sm-2 col-6">
+                <label for="desempenho">Desempenho:</label>
+                <select class="form-control" id="desempenho" [(ngModel)]="jogador.pontuacao">
+                  <option *ngFor="let desempenhoJogador of desempenhosJogadores" [ngValue]="desempenhoJogador.nota" [selected]="desempenhoJogador.active">
+                    {{ desempenhoJogador.nota }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <hr *ngIf="i < jogadores.length">
+        </div>
+        <div class="d-grid gap-2 pt-2">
+          <button class="btn btn-secondary"  data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" type="button" (click)="pontuarJogadores(jogadores); editandoJogadores = !editandoJogadores">
+            Finalizar edição
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr *ngIf="jaGerouNota">
+
+  <div *ngIf="jaGerouNota" class="col-12 d-flex justify-content-center">
+    <div class="col-12 col-sm-5 testec">
+      <table class="table table-dark table-striped tablenotas">
+        <thead>
+          <tr>
+            <th scope="col">Avaliação</th>
+            <th>Desempenho</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Nota</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let jogador of jogadores; index as i">
+            <th scope="row"><img [src]="jogador.img" alt="Jogador {{i}}" class="player playerImg player{{i}}"> </th>
+            <td>{{jogador.pontuacao}}</td>
+            <td>{{jogador.nome}}</td>
+            <td>{{jogador.nota}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr *ngIf="jaGerouNota">
+
+  <div class="col-12 pt-2">
+    <div class="d-grid gap-2">
+      <button *ngIf="jaGerouNota" class="btn btn-block btn-primary pr-2" [disabled]="!jaGerouNota"  (click)="salvar()">Salvar</button>
+    </div>
+  </div>
+</div>

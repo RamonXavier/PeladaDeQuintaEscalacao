@@ -8,12 +8,16 @@ import { SorteioTimesComponent } from './sorteioTimes/sorteioTimes.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MenuComponent } from './menu/menu.component';
+import { PontuacaoJogadoresComponent } from './pontuacaoJogadores/pontuacaoJogadores.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SorteioTimesComponent
-  ],
+    SorteioTimesComponent,
+    MenuComponent,
+    PontuacaoJogadoresComponent
+   ],
   imports: [
     BrowserModule,
     FormsModule,

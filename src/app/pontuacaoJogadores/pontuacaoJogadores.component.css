@@ -1,0 +1,74 @@
+@import 'ngx-toastr/toastr';
+
+body{
+  background-color: #d9d9d9;
+}
+
+.container {
+  padding: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.time-card {
+  /* border: 1px solid #ccc; */
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+}
+
+h3 {
+  margin-bottom: 10px;
+}
+
+.player {
+  width: 111px;
+  height: 113px;
+  display: inline-block;
+  border-radius: 54%;
+  background-image: url("https://i.ibb.co/3Nw177S/card-fifa.png");
+  background-size: cover;
+}
+
+.playerImg {
+  z-index: 2;
+}
+
+/* Posicionando cada jogador */
+.player1 {
+  top: 0px;
+  left: 430px;
+}
+
+.playerName1 {
+  top: 112px;
+  left: 443px;
+}
+
+/* RESPONSIVIDADE MOBILE */
+
+@media only screen and (max-width: 600px) {
+  .player1 {
+    top: 0px;
+    left: 160px;
+  }
+  .player {
+    width: 72px;
+    height: 70px;
+  }
+  .tablenotas{
+    margin-left: -15px!important;
+  }
+}
