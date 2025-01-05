@@ -24,28 +24,36 @@
         <h2>Trocar jogadores</h2>
         <div *ngFor="let jogador of jogadores;  index as i">
             <div class="row">
-              <div class="col-sm-1 col-6">
+              <div class="col-sm-1 col-12">
                 <label for="numero">Nº:</label>
                 <input class="form-control" type="text" id="numero" [(ngModel)]="jogador.id" name="numero" required disabled/>
               </div>
 
-              <div class="col-sm-3 col-6">
+              <div class="col-sm-3 col-12">
                 <label for="nome">Nome do Jogador:</label>
                 <input class="form-control" (keyup)="jogador.img = imagemAvulso" type="text" id="nome" [(ngModel)]="jogador.nome" name="nome" required />
               </div>
 
-              <div class="col-sm-4 col-6">
+              <div class="col-sm-4 col-12">
                 <label for="nota">Pontuação:</label>
                 <input class="form-control" type="number" id="nota" [(ngModel)]="jogador.nota" name="nota" required />
               </div>
 
-              <div class="col-sm-2 col-6">
+              <div class="col-sm-2 col-12">
                 <label for="desempenho">Desempenho:</label>
                 <select class="form-control" id="desempenho" [(ngModel)]="jogador.pontuacao">
-                  <option *ngFor="let desempenhoJogador of desempenhosJogadores" [ngValue]="desempenhoJogador.nota" [selected]="desempenhoJogador.active">
-                    {{ desempenhoJogador.nota }}
-                  </option>
+                  <option value="🔼🔼🔼">🔼🔼🔼</option>
+                  <option value="🔼🔼">🔼🔼</option>
+                  <option value="🔼">🔼</option>
+                  <option value="➖" selected>➖</option>
+                  <option value="🔻">🔻</option>
+                  <option value="🔻🔻">🔻🔻</option>
+                  <option value="🔻🔻🔻">🔻🔻🔻</option>
                 </select>
+              </div>
+              <div class="col-sm-2 col-12">
+                <label for="gols">Gols:</label>
+                <input class="form-control" type="number" id="gols" [(ngModel)]="jogador.gols" name="gols" required />
               </div>
             </div>
             <hr *ngIf="i < jogadores.length">
@@ -70,6 +78,7 @@
             <th>Desempenho</th>
             <th scope="col">Nome</th>
             <th scope="col">Nota</th>
+            <th scope="col">Gols</th>
           </tr>
         </thead>
         <tbody>
@@ -78,6 +87,7 @@
             <td>{{jogador.pontuacao}}</td>
             <td>{{jogador.nome}}</td>
             <td>{{jogador.nota}}</td>
+            <td>{{jogador.gols}}</td>
           </tr>
         </tbody>
       </table>

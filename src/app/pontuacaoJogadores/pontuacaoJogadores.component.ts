@@ -12,6 +12,7 @@ interface Jogador {
   img: string;
   pote: number;
   pontuacao: string;
+  gols: number;
 }
 
 
@@ -30,19 +31,8 @@ export class PontuacaoJogadoresComponent implements OnInit {
   public goleiros: Jogador[] = [];
   public imagemCardFifa: string = "https://i.ibb.co/3Nw177S/card-fifa.png";
   public imagemAvulso = 'https://i.ibb.co/DKgB6RP/cris.png';
-  public desempenhosJogadores: any[] =
-  [
-    {nota:'🔼🔼🔼', active: false},
-    {nota:'🔼🔼', active: false},
-    {nota:'🔼', active: false},
-    {nota:'➖', active: true},
-    {nota:'🔻', active: false},
-    {nota:'🔻🔻', active: false},
-    {nota:'🔻🔻🔻', active: false}
-  ];
 
   constructor (private toastr: ToastrService, private aniversariantesBackground: AniversariantesBackground){
-
   }
 
 
@@ -69,7 +59,7 @@ export class PontuacaoJogadoresComponent implements OnInit {
           proxy: 'https://cors-anywhere.herokuapp.com/', // Opcional: Proxy para contornar problemas de CORS
         });
         const image = canvas.toDataURL('image/png');
-        this.downloadImage(image, `sorteioDaSemana.png`);
+        this.downloadImage(image, `pontuaçãoDaSemana.png`);
         index++;
       }
     }
@@ -99,7 +89,8 @@ export class PontuacaoJogadoresComponent implements OnInit {
               coroa: jogador.coroa,
               nota: jogador?.nota,
               pote: jogador?.pote,
-              pontuacao: jogador.pontuacao
+              pontuacao: jogador.pontuacao,
+              gols: jogador.gols
             }
             jogador = novoJogador;
           }
