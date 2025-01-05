@@ -14,12 +14,18 @@
 
   <div class="col-12">
     <div class="d-grid gap-2 pt-3">
-      <button class="btn btn-primary btn-block" (click)="editandoJogadores = !editandoJogadores" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      <button class="btn btn-primary btn-block" (click)="editandoJogadores = !editandoJogadores" data-bs-toggle="collapse" href="#collapseEditarPontuacao" role="button" aria-expanded="false" aria-controls="collapseEditarPontuacao">
         {{editandoJogadores ? 'Fechar edição de jogadores' : 'Abrir edição de jogadores'}}
       </button>
     </div>
 
-    <div class="collapse" id="collapseExample">
+    <div class="d-grid gap-2 pt-2">
+      <button class="btn btn-secondary"  data-bs-toggle="collapse" href="#collapseEditarPontuacao" role="button" aria-expanded="false" aria-controls="collapseEditarPontuacao" type="button" (click)="pontuarJogadores(jogadores); editandoJogadores = !editandoJogadores">
+        Finalizar edição
+      </button>
+    </div>
+
+    <div class="collapse" id="collapseEditarPontuacao">
       <div class="card card-body">
         <h2>Trocar jogadores</h2>
         <div *ngFor="let jogador of jogadores;  index as i">
@@ -59,7 +65,7 @@
             <hr *ngIf="i < jogadores.length">
         </div>
         <div class="d-grid gap-2 pt-2">
-          <button class="btn btn-secondary"  data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" type="button" (click)="pontuarJogadores(jogadores); editandoJogadores = !editandoJogadores">
+          <button class="btn btn-secondary"  data-bs-toggle="collapse" href="#collapseEditarPontuacao" role="button" aria-expanded="false" aria-controls="collapseEditarPontuacao" type="button" (click)="pontuarJogadores(jogadores); editandoJogadores = false">
             Finalizar edição
           </button>
         </div>
@@ -70,27 +76,24 @@
   <hr *ngIf="jaGerouNota">
 
   <div *ngIf="jaGerouNota" class="col-12 d-flex justify-content-center">
-    <div class="col-12 col-sm-5 testec">
-      <table class="table table-dark table-striped tablenotas">
-        <thead>
-          <tr>
-            <th scope="col">Avaliação</th>
-            <th>Desempenho</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Nota</th>
-            <th scope="col">Gols</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let jogador of jogadores; index as i">
-            <th scope="row"><img [src]="jogador.img" alt="Jogador {{i}}" class="player playerImg player{{i}}"> </th>
-            <td>{{jogador.pontuacao}}</td>
-            <td>{{jogador.nome}}</td>
-            <td>{{jogador.nota}}</td>
-            <td>{{jogador.gols}}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="col-12 testec">
+      <div class="card playerCard">
+        <div class="row col-12">
+          <div class="col-sm-4 col-12" *ngFor="let jogador of jogadores; index as i" >
+            <div class="d-flex justify-content-center">
+              <img class="player playerImg player{{i}}" [src]="jogador.img" alt="Jogador {{i}}">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title text-center">
+                {{jogador.nome}}<br>
+                🌟: {{jogador.pontuacao}} / 📈: {{jogador.nota}} / ⚽: {{jogador.gols}}
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-12 pb-2">
+      </div>
     </div>
   </div>
 

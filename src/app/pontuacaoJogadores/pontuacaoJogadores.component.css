@@ -40,6 +40,13 @@ h3 {
   border-radius: 54%;
   background-image: url("https://i.ibb.co/3Nw177S/card-fifa.png");
   background-size: cover;
+  margin: auto;
+}
+
+.playerCard {
+  background-image: url(https://i.ibb.co/HTxvC0F/Futuristic-Red-Blue-Background-Design-Graphics-30683310-1.png);
+  background-size: cover;
+  color: wheat;
 }
 
 .playerImg {
@@ -70,5 +77,15 @@ h3 {
   }
   .tablenotas{
     margin-left: -15px!important;
+  }
+  .player {
+    width: 141px;
+    height: 143px;
+  }
+}
+@media only screen and (min-width: 800px) {
+  .player {
+    width: 211px;
+    height: 213px;
   }
 }
