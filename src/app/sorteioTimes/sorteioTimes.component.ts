@@ -3,22 +3,10 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import jogadoresData from './../../assets/jogadores.json';
 import html2canvas from 'html2canvas';
 import { ToastrService } from 'ngx-toastr';
-
-interface Jogador {
-  id: number;
-  nome: string;
-  nota: number;
-  coroa: boolean;
-  img: string;
-  pote: number;
-}
-
-interface Time {
-  nome: string;
-  jogadores: Jogador[];
-  nota: number;
-  imagem: string[];
-}
+import { JogadorDto } from '../../shared/model/jogadorDto.model';
+import { TimeDto } from '../../shared/model/timeDto.model';
+import { LogGeracaoTimeService } from '../../shared/service/logGeracaoTime.service';
+import { CriarLoggeracaoTimeDto } from '../../shared/model/criarLoggeracaoTimeDto.model';
 
 @Component({
   selector: 'sorteioTimes',
@@ -31,8 +19,8 @@ interface Time {
 export class SorteioTimesComponent implements OnInit {
   public jaGerouTimes: boolean = false;
   public editandoJogadores: boolean = false;
-  public jogadores: Jogador[] = [];
-  public times: Time[] = [];
+  public jogadores: JogadorDto[] = [];
+  public times: TimeDto[] = [];
   public imagemCardFifa: string = "https://i.ibb.co/3Nw177S/card-fifa.png";
   public imagemAvulso = 'https://i.ibb.co/DKgB6RP/cris.png';
   public emblemasTimes: any[] =
@@ -42,9 +30,10 @@ export class SorteioTimesComponent implements OnInit {
     'https://i.ibb.co/2q5D9Vr/donos-1.png'
   ];
 
-  constructor (private toastr: ToastrService, private aniversariantesBackground: AniversariantesBackground){
-
-  }
+  constructor (
+    private toastr: ToastrService,
+    private aniversariantesBackground: AniversariantesBackground,
+    private _logGeracaoTimeService: LogGeracaoTimeService){ }
 
 
   ngOnInit(): void {
@@ -73,7 +62,7 @@ export class SorteioTimesComponent implements OnInit {
 
     this.times = [];
 
-    const timesPadrao: Time[] = [
+    const timesPadrao: TimeDto[] = [
       { nome: '1 - Boleiros e parceiros', jogadores: [], nota: 0, imagem: []},
       { nome: '2 - Chuta que é gol', jogadores: [], nota: 0, imagem: []},
       { nome: '3 - Os donos do jogo', jogadores: [], nota: 0, imagem: []},
@@ -82,14 +71,32 @@ export class SorteioTimesComponent implements OnInit {
     this.distribuirJogadoresCoroasNosTimes(timesPadrao, jogadoresCoroas);
     this.distribuirJogadoresComunsNosTimes(timesPadrao, jogadoresComuns);
 
+
+
     this.jaGerouTimes = true;
     this.times = timesPadrao;
+
+    let logTimeGerado: CriarLoggeracaoTimeDto[] = [];
+    this.times.forEach(timePercorrido => {
+      let logTimeGeradoPercorrido: CriarLoggeracaoTimeDto =
+      {
+        dataGeracaoTime: new Date(),
+        jogadores: timePercorrido.jogadores,
+        nome: timePercorrido.nome,
+        nota: timePercorrido.nota.toString()
+      }
+      logTimeGerado.push(logTimeGeradoPercorrido)
+    });
+
+    this._logGeracaoTimeService.criar(logTimeGerado).then(resultado =>  {
+      this.toastr.success('Weeeeaaaa!!!😎');
+    })
     this.toastr.success('Os 3 times foram criados', '🚀Tudo certo!🚀');
   }
 
-  private distribuirJogadoresCoroasNosTimes(timesPadrao: Time[], jogadoresCoroas: Jogador[]):void {
-    let jogadoresCoroasDisponiveis: Jogador[] = [];
-    let jogadoresCoroasJaSelecionados: number[] = [];
+  private distribuirJogadoresCoroasNosTimes(timesPadrao: TimeDto[], jogadoresCoroas: JogadorDto[]):void {
+    let jogadoresCoroasDisponiveis: JogadorDto[] = [];
+    let jogadoresCoroasJaSelecionados: any[] = [];
 
     for (let i = 0; i < 3; i++) {
       jogadoresCoroasDisponiveis = jogadoresCoroas.filter(x => !jogadoresCoroasJaSelecionados.includes(x.id));
@@ -102,8 +109,8 @@ export class SorteioTimesComponent implements OnInit {
     }
   }
 
-  private distribuirJogadoresComunsNosTimes(timesPadrao: Time[], jogadoresNormais: Jogador[]): void {
-    let jogadoresNormaisDisponiveis: Jogador[] = [];
+  private distribuirJogadoresComunsNosTimes(timesPadrao: TimeDto[], jogadoresNormais: JogadorDto[]): void {
+    let jogadoresNormaisDisponiveis: JogadorDto[] = [];
     let jogadoresNormaisJaSelecionados: number[] = [];
 
     const quantidadeMaximaJogadoresNoTime = 5;
@@ -139,7 +146,7 @@ export class SorteioTimesComponent implements OnInit {
     }
   }
 
-  public editarJogadores(novosJogadores: Jogador[]): void{
+  public editarJogadores(novosJogadores: JogadorDto[]): void{
     this.jogadores = novosJogadores;
     this.toastr.success('Os jogadores foram editados', '🚀Tudo certo!🚀');
   }
@@ -155,7 +162,7 @@ export class SorteioTimesComponent implements OnInit {
 
     this.jogadores.forEach(jogador => {
           if(jogador.id == id){
-            let novoJogador: Jogador = {
+            let novoJogador: JogadorDto = {
               id: jogador.id,
               img: 'https://sportrenders.com/wp-content/uploads/2023/10/Cristiano-Ronaldo-Render-PNG-Al-Nassr-Image-Sport-Renders-1.png',
               nome: jogador?.nome,
