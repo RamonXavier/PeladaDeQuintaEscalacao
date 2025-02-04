@@ -32,11 +32,13 @@ body{
     background-size: contain;
     margin-top: -60rem;
   }
-  .nomeAtleta {
-    //margin-top: -40rem;
-  }
 }
-
+.infoJogo{
+  font-family: 'ST-Nizhegorodsky', sans-serif;
+  font-size: 50px;
+  position: absolute;
+  margin-top: -23rem;
+}
 .nomeAtleta {
   font-family: 'ST-Nizhegorodsky', sans-serif;
   font-size: 200px;

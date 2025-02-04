@@ -19,6 +19,16 @@
         <input class="form-control" type="text" placeholder="Nome do Atleta" [(ngModel)]="nomeAtleta">
       </div>
 
+      <div class="col-sm-4 pl-0 col-12">
+        <label for="nome">Quantos gols você fez?</label>
+        <input class="form-control" type="text" placeholder="Número de gols" [(ngModel)]="golsAtleta">
+      </div>
+
+      <div class="col-sm-4 pl-0 col-12">
+        <label for="nome">Quando foi o jogo?</label>
+        <input class="form-control" type="text" placeholder="Data do jogo" [(ngModel)]="dataJogo">
+      </div>
+
       <div class="col-sm-6 pl-0 col-12">
         <label for="nome">Atributo:</label>
         <ng-select [items]="apelidosJogadores"
@@ -78,6 +88,12 @@
 
           <div class="cardFifa">
             <img [src]="jogadorSelecionado?.img" class="cardAtleta" [ngStyle]="{'margin-left':posicaoHorizontalInicial+'rem', 'margin-top':posicaoVerticalInicial+'rem'}">
+          </div>
+
+          <div class="infoJogo">
+            <span class="">
+              Gols: {{golsAtleta}} <br> Data: {{dataJogo}}
+            </span>
           </div>
 
           <div class="marqueAPelada"><span style="color: white;">{{'@PeladaDeQuintaJf'}}</span></div>

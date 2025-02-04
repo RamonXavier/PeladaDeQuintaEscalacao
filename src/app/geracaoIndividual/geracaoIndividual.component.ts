@@ -14,6 +14,8 @@ export class GeracaoIndividualComponent implements OnInit {
 
   public posicaoHorizontalInicial: number = 0;
   public posicaoVerticalInicial: number = -6;
+  public golsAtleta?: number;
+  public dataJogo?: string;
   public jogadores: JogadorDto[] = [];
   public jogadorSelecionado?: JogadorDto;
   public idJogadorSelecionado?: number;
