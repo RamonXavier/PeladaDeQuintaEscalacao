@@ -10,13 +10,16 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenuComponent } from './menu/menu.component';
 import { PontuacaoJogadoresComponent } from './pontuacaoJogadores/pontuacaoJogadores.component';
+import { GeracaoIndividualComponent } from './geracaoIndividual/geracaoIndividual.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
     AppComponent,
     SorteioTimesComponent,
     MenuComponent,
-    PontuacaoJogadoresComponent
+    PontuacaoJogadoresComponent,
+    GeracaoIndividualComponent,
    ],
   imports: [
     BrowserModule,
@@ -29,6 +32,8 @@ import { PontuacaoJogadoresComponent } from './pontuacaoJogadores/pontuacaoJogad
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
+    NgSelectModule,
+    FormsModule
   ],
   providers: [],
   exports: [],

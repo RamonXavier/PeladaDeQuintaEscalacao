@@ -1,0 +1,78 @@
+@import 'ngx-toastr/toastr';
+@import "../../../node_modules/@ng-select/ng-select/scss/default.theme.scss";
+@import url('https://fonts.cdnfonts.com/css/st-nizhegorodsky');
+
+body{
+  background-color: #d9d9d9;
+}
+
+.story {
+  width: 1080px;
+  height: 1920px;
+  //background: linear-gradient(45deg, #ff7e5f, #feb47b);
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-size: 48px;
+  text-align: center;
+  background-image: url(https://i.ibb.co/0kTXyjN/566de137e2e9ff30437ab4f911f3fa05.jpg);
+  background-size: cover;
+  transform: scale(0.3); /* Reduz visualmente, mas mantém o tamanho real */
+  transform-origin: top left; /* Garante que a escala aconteça corretamente */
+}
+
+/* Reduz ainda mais para telas menores */
+@media (max-width: 600px) {
+  .story {
+    transform: scale(0.3);
+    margin-left: 1.5rem;
+  }
+  .cardAtleta {
+    transform: scale(0.9);
+    background-size: contain;
+    margin-top: -60rem;
+  }
+  .nomeAtleta {
+    //margin-top: -40rem;
+  }
+}
+
+.nomeAtleta {
+  font-family: 'ST-Nizhegorodsky', sans-serif;
+  font-size: 200px;
+  //margin-top: -30rem;
+}
+.apelidoAtleta {
+  font-family: 'ST-Nizhegorodsky', sans-serif;
+  font-size: 150px;
+  color: #ffcf00;
+  height: 40px;
+}
+.cardFifa{
+  background-image: url(https://i.ibb.co/wZzZgfPd/CHAMPIONS-LEAGUE-RTTK-T23.png);
+  background-size: cover;
+  height: 81%;
+  transform: scale(0.8);
+  margin-top: -16rem;
+  margin-left: -1rem;
+}
+.cardAtleta {
+  width: 1000px;
+}
+.playerImg {
+  z-index: 2;
+}
+.marqueAPelada{
+  background-color: black;
+  height: 80px;
+  margin-top: -12rem;
+  width: 68%;
+  margin-left: 16%;
+}
+.patrocinadores {
+  background-image: url(https://i.ibb.co/ZQMk2yz/patrocinadores.png);
+  height: 178px;
+  width: 100%;
+  margin-left: 0px;
+  background-size: cover;
+}

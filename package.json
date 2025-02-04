@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "ng deploya":"ng deploy --base-href=https://ramonxavier.github.io/PeladaDeQuintaEscalacao/"
+    "ng deploya": "ng deploy --base-href=https://ramonxavier.github.io/PeladaDeQuintaEscalacao/"
   },
   "private": true,
   "dependencies": {
@@ -19,6 +19,7 @@
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
+    "@ng-select/ng-select": "^14.2.0",
     "html2canvas": "^1.4.1",
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",

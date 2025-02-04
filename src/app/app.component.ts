@@ -12,6 +12,7 @@ export class AppComponent {
   public menuEscolhido: number = MenuConstant.Sorteio;
   public menuSorteio: number = MenuConstant.Sorteio;
   public menuPontuacao: number = MenuConstant.Pontuacao;
+  public menuGerarIndividual: number = MenuConstant.GerarIndividual;
 
 
   constructor(){
