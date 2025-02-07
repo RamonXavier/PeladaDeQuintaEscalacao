@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { JogadorDto } from '../../shared/model/jogadorDto.model';
 import jogadoresData from './../../assets/jogadores.json';
 import html2canvas from 'html2canvas';
+import { JogadoresService } from '../../shared/service/jogadores.service';
 
 @Component({
   selector: 'app-geracaoIndividual',
@@ -146,24 +147,20 @@ export class GeracaoIndividualComponent implements OnInit {
   public goleiros: JogadorDto[] = [];
   public avulsos: JogadorDto[] = [];
 
-  constructor() { }
+  constructor(private _jogadoresService: JogadoresService) { }
 
   ngOnInit() {
     this.carregarJogadoresDoJsonConfigurado();
   }
 
   private carregarJogadoresDoJsonConfigurado(): void {
-    this.jogadores = (jogadoresData as any).jogadores;
-    this.goleiros = (jogadoresData as any).goleiros;
-    this.avulsos = (jogadoresData as any).avulsos;
+    this.jogadores = [];
 
-    this.goleiros.forEach(goleiro => {
-      this.jogadores.push(goleiro);
-    });
+    this.jogadores = this._jogadoresService.buscarMensalistas();
+    this.goleiros = this._jogadoresService.buscarGoleiros();
+    this.avulsos = this._jogadoresService.buscarAvulsos();
 
-    this.avulsos.forEach(goleiro => {
-      this.jogadores.push(goleiro);
-    });
+    this.jogadores = [...this.jogadores, ...this.goleiros, ...this.avulsos];
   }
 
   public selecionarJogador(idJogadorSelecionado?: number):void {

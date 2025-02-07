@@ -1,12 +1,11 @@
-import { AniversariantesBackground } from './../../backgrounds/aniversariantes.background';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import jogadoresData from './../../assets/jogadores.json';
 import html2canvas from 'html2canvas';
 import { ToastrService } from 'ngx-toastr';
 import { JogadorDto } from '../../shared/model/jogadorDto.model';
 import { TimeDto } from '../../shared/model/timeDto.model';
 import { LogGeracaoTimeService } from '../../shared/service/logGeracaoTime.service';
 import { CriarLoggeracaoTimeDto } from '../../shared/model/criarLoggeracaoTimeDto.model';
+import { JogadoresService } from '../../shared/service/jogadores.service';
 
 @Component({
   selector: 'sorteioTimes',
@@ -32,7 +31,7 @@ export class SorteioTimesComponent implements OnInit {
 
   constructor (
     private toastr: ToastrService,
-    private aniversariantesBackground: AniversariantesBackground,
+    private _jogadoresService: JogadoresService,
     private _logGeracaoTimeService: LogGeracaoTimeService){ }
 
 
@@ -41,7 +40,8 @@ export class SorteioTimesComponent implements OnInit {
   }
 
   private carregarJogadoresDoJsonConfigurado(): void {
-    this.jogadores = (jogadoresData as any).jogadores;
+    this.jogadores = [];
+    this.jogadores = this._jogadoresService.buscarMensalistas();
   }
 
   public gerarTimes(): void {
@@ -116,13 +116,13 @@ export class SorteioTimesComponent implements OnInit {
     const quantidadeMaximaJogadoresNoTime = 5;
 
     for (const timePercorrido of timesPadrao) {
-      let potesJaAdicionados: number[] = [];
+      let potesJaAdicionados: string[] = [];
       while (timePercorrido.jogadores.length < quantidadeMaximaJogadoresNoTime) {
-        jogadoresNormaisDisponiveis = jogadoresNormais.filter(x => !jogadoresNormaisJaSelecionados.includes(x.id) && !potesJaAdicionados.includes(x.pote));
+        jogadoresNormaisDisponiveis = jogadoresNormais.filter(x => !jogadoresNormaisJaSelecionados.includes(x.id) && !potesJaAdicionados.includes(x.pote!));
         const jogadorParaAdicionarAoTime = jogadoresNormaisDisponiveis.splice(Math.floor(Math.random() * jogadoresNormaisDisponiveis.length), 1)[0];
 
         jogadoresNormaisJaSelecionados.push(jogadorParaAdicionarAoTime.id);
-        potesJaAdicionados.push(jogadorParaAdicionarAoTime.pote);
+        potesJaAdicionados.push(jogadorParaAdicionarAoTime.pote!);
 
         timePercorrido.jogadores.push(jogadorParaAdicionarAoTime);
         timePercorrido.imagem.push(jogadorParaAdicionarAoTime.img);

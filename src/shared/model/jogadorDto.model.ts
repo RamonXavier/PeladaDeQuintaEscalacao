@@ -4,8 +4,9 @@ export class JogadorDto {
   nota: number = 0;
   coroa?: boolean;
   img: string = '';
-  pote: number = 0;
-
+  pontuacao?: string;
+  gols?: string;
+  pote?: string;
   constructor(init?: Partial<JogadorDto>) {
     Object.assign(this, init);
   }

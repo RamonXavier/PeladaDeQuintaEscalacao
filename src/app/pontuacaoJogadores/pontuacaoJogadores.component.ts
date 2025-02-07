@@ -1,20 +1,8 @@
-import { AniversariantesBackground } from '../../backgrounds/aniversariantes.background';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import jogadoresData from '../../assets/jogadores.json';
 import html2canvas from 'html2canvas';
 import { ToastrService } from 'ngx-toastr';
-
-interface Jogador {
-  id: number;
-  nome: string;
-  nota: number;
-  coroa: boolean;
-  img: string;
-  pote: number;
-  pontuacao: string;
-  gols: number;
-}
-
+import { JogadoresService } from '../../shared/service/jogadores.service';
+import { JogadorDto } from '../../shared/model/jogadorDto.model';
 
 @Component({
   selector: 'pontuacaoJogadores',
@@ -27,12 +15,12 @@ interface Jogador {
 export class PontuacaoJogadoresComponent implements OnInit {
   public jaGerouNota:boolean = false;
   public editandoJogadores: boolean = false;
-  public jogadores: Jogador[] = [];
-  public goleiros: Jogador[] = [];
+  public jogadores: JogadorDto[] = [];
+  public goleiros: JogadorDto[] = [];
   public imagemCardFifa: string = "https://i.ibb.co/3Nw177S/card-fifa.png";
   public imagemAvulso = 'https://i.ibb.co/DKgB6RP/cris.png';
 
-  constructor (private toastr: ToastrService, private aniversariantesBackground: AniversariantesBackground){
+  constructor (private toastr: ToastrService, private _jogadoresService: JogadoresService){
   }
 
 
@@ -41,13 +29,11 @@ export class PontuacaoJogadoresComponent implements OnInit {
   }
 
   private carregarJogadoresDoJsonConfigurado(): void {
-    this.jogadores = (jogadoresData as any).jogadores;
-    this.goleiros = (jogadoresData as any).goleiros;
+    this.jogadores = [];
+    this.jogadores = this._jogadoresService.buscarMensalistas();
+    this.goleiros = this._jogadoresService.buscarGoleiros();
 
-    this.goleiros.forEach(goleiro => {
-      this.jogadores.push(goleiro);
-    });
-
+    this.jogadores = [...this.jogadores, ...this.goleiros];
   }
 
   async salvar(): Promise<void> {
@@ -65,7 +51,7 @@ export class PontuacaoJogadoresComponent implements OnInit {
     }
   }
 
-  public pontuarJogadores(novosJogadores: Jogador[]): void{
+  public pontuarJogadores(novosJogadores: JogadorDto[]): void{
     this.jogadores = novosJogadores;
     this.toastr.success('Os jogadores foram pontuados', '🚀Tudo certo!🚀');
     this.jaGerouNota = true;
@@ -82,7 +68,7 @@ export class PontuacaoJogadoresComponent implements OnInit {
 
     this.jogadores.forEach(jogador => {
           if(jogador.id == id){
-            let novoJogador: Jogador = {
+            let novoJogador: JogadorDto = {
               id: jogador.id,
               img: 'https://sportrenders.com/wp-content/uploads/2023/10/Cristiano-Ronaldo-Render-PNG-Al-Nassr-Image-Sport-Renders-1.png',
               nome: jogador?.nome,
