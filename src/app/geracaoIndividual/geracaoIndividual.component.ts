@@ -21,6 +21,7 @@ export class GeracaoIndividualComponent implements OnInit {
   public idJogadorSelecionado?: number;
   public nomeAtleta?: string = "Caça Rato";
   public apelidoSelecionado?: string;
+  public cartinhaFifaSelecionada?: string = 'https://i.ibb.co/wZzZgfPd/CHAMPIONS-LEAGUE-RTTK-T23.png';
   public apelidosJogadores = [
     {nome: "Bombástico!"},
 {nome: "El Caçador"},
@@ -129,6 +130,19 @@ export class GeracaoIndividualComponent implements OnInit {
 {nome: "O Maestro da Bola"},
 {nome: "Pantera do Gramado"}
   ];
+
+  public cartinhasFifa = [
+    'https://i.ibb.co/wZzZgfPd/CHAMPIONS-LEAGUE-RTTK-T23.png',
+    'https://i.ibb.co/Q76GtKWw/futcard-liverpool-web-min.png',
+    'https://i.ibb.co/yFZbWKN6/HERO-min-496x800.png',
+    'https://i.ibb.co/45TjRHC/FUTURE-STARS-T23-min.png',
+    'https://i.ibb.co/hFQFDvQH/gold1.png',
+    'https://i.ibb.co/rGtc6sh6/gold12.png',
+    'https://i.ibb.co/bj2SRKww/rugby.png',
+    'https://i.ibb.co/P3nqYSQ/icon-24.png',
+    'https://i.ibb.co/Txm21wJq/azul2.png',
+    'https://i.ibb.co/kgPCwCL0/totw.png'
+  ]
   public goleiros: JogadorDto[] = [];
   public avulsos: JogadorDto[] = [];
 
@@ -159,6 +173,11 @@ export class GeracaoIndividualComponent implements OnInit {
   public selecionarApelido():void {
     const indiceAleatorio = Math.floor(Math.random() * this.apelidosJogadores.length);
     this.apelidoSelecionado = this.apelidosJogadores[indiceAleatorio].nome;
+  }
+
+  public mudarCartinha():void {
+    const indiceAleatorio = Math.floor(Math.random() * this.cartinhasFifa.length);
+    this.cartinhaFifaSelecionada = this.cartinhasFifa[indiceAleatorio];
   }
 
   public captureStory():void {

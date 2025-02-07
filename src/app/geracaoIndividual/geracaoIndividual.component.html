@@ -40,6 +40,28 @@
         </ng-select>
       </div>
 
+      <div class="col-sm-2 col-12 pt-1">
+        <span class="badge bg-primary"(click)="selecionarApelido()" style="cursor: pointer;">Clique para gerar</span>
+      </div>
+    </div>
+
+    <div class="col-sm-12 pl-0 col-12">
+      <div class="col-sm-6 pl-0 col-12">
+        <label for="nome">Selecionar jogador:</label>
+        <ng-select [items]="jogadores"
+          placeholder="Escolha você"
+          class="pb-1"
+          bindLabel="nome"
+          bindValue="id"
+          [(ngModel)]="idJogadorSelecionado"
+          (change)="selecionarJogador(idJogadorSelecionado)">
+        </ng-select>
+      </div>
+
+      <div class="col-sm-2 col-12 pt-1">
+        <span class="badge bg-warning"(click)="mudarCartinha()" style="cursor: pointer;">Clique para mudar sua carta</span>
+      </div>
+
       <div class="col-sm-6 pl-0 col-12">
         <label for="customRange2" class="form-label">Posição horizontal:</label>
         <input type="range" [(ngModel)]="posicaoHorizontalInicial" class="form-range" min="-65" max="40" id="customRange2">
@@ -49,22 +71,6 @@
         <label for="customRange2" class="form-label">Posição vertical:</label>
         <input type="range" [(ngModel)]="posicaoVerticalInicial" class="form-range" min="-40" max="40" id="customRange2">
       </div>
-
-      <div class="col-sm-2 col-12 pt-1">
-        <span class="badge bg-primary"(click)="selecionarApelido()" style="cursor: pointer;">Clique para gerar</span>
-      </div>
-    </div>
-
-    <div class="col-sm-6 pl-0 col-12">
-      <label for="nome">Selecionar jogador:</label>
-      <ng-select [items]="jogadores"
-        placeholder="Escolha você"
-        class="pb-1"
-        bindLabel="nome"
-        bindValue="id"
-        [(ngModel)]="idJogadorSelecionado"
-        (change)="selecionarJogador(idJogadorSelecionado)">
-      </ng-select>
     </div>
 
     <div class="pb-2">
@@ -86,7 +92,7 @@
             {{nomeAtleta}}
           </span>
 
-          <div class="cardFifa">
+          <div class="cardFifa" [ngStyle]="{'background-image': 'url('+cartinhaFifaSelecionada+')'}">
             <img [src]="jogadorSelecionado?.img" class="cardAtleta" [ngStyle]="{'margin-left':posicaoHorizontalInicial+'rem', 'margin-top':posicaoVerticalInicial+'rem'}">
           </div>
 
