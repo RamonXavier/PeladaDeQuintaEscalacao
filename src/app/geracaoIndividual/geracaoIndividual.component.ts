@@ -129,6 +129,8 @@ export class GeracaoIndividualComponent implements OnInit {
 {nome: "O Maestro da Bola"},
 {nome: "Pantera do Gramado"}
   ];
+  public goleiros: JogadorDto[] = [];
+  public avulsos: JogadorDto[] = [];
 
   constructor() { }
 
@@ -138,6 +140,16 @@ export class GeracaoIndividualComponent implements OnInit {
 
   private carregarJogadoresDoJsonConfigurado(): void {
     this.jogadores = (jogadoresData as any).jogadores;
+    this.goleiros = (jogadoresData as any).goleiros;
+    this.avulsos = (jogadoresData as any).avulsos;
+
+    this.goleiros.forEach(goleiro => {
+      this.jogadores.push(goleiro);
+    });
+
+    this.avulsos.forEach(goleiro => {
+      this.jogadores.push(goleiro);
+    });
   }
 
   public selecionarJogador(idJogadorSelecionado?: number):void {
