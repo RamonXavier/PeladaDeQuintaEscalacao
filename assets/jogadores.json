@@ -1,4 +1,22 @@
 {
+  "avulsos":[
+    {
+      "id": 18,
+      "nome": "RAPHAEL RUFINO",
+      "nota": 9.0,
+      "img":"https://i.ibb.co/HDz6f3GQ/Raphael-Rufino.png",
+      "pontuacao":"➖",
+      "gols":"0"
+    },
+    {
+      "id": 19,
+      "nome": "LÉO XAVIER",
+      "nota": 8.0,
+      "img":"https://i.ibb.co/1BNbY0N/Leo-Xavier.png",
+      "pontuacao":"➖",
+      "gols":"0"
+    }
+  ],
   "goleiros": [
       {
           "id": 16,
