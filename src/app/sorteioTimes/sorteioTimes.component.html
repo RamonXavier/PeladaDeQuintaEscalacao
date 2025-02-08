@@ -118,6 +118,7 @@
             <div *ngFor="let imagem of time.imagem; index as img" class="col-12">
               <div class="col text-center">
                 <img [src]="imagem" alt="Jogador 1" style="background-image: url({{cardsFifa[i]}}); background-size: cover;" width="100" height="100">
+                <br>
                 <b>
                   <span style="font-size: 9px;">{{time.jogadores[img].nome}}</span>
                 </b>
