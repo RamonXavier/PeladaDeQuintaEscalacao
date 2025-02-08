@@ -203,12 +203,20 @@ export class JogadoresApi {
       {
         "id": 19,
         "nome": "LÉO XAVIER",
-        "nota": 8.0,
+        "nota": 7.0,
         "img":"https://i.ibb.co/1BNbY0N/Leo-Xavier.png",
         "pontuacao":"➖",
         "gols":"0"
+      },
+      {
+        "id": 20,
+        "nome": "WANDERLEY",
+        "nota": 8.0,
+        "img":"https://i.ibb.co/bjcpWp8D/wanderley2.png",
+        "pontuacao":"➖",
+        "gols":"0"
       }
-    ];
+    ]
 
     return jogadoresAvulsos;
   }

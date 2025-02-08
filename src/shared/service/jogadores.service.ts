@@ -18,6 +18,6 @@ export class JogadoresService {
   }
 
   public buscarAvulsos(): JogadorDto[] {
-    return this._jogadoresApi.buscarMensalistas();
+    return this._jogadoresApi.buscarAvulsos();
   }
 }
