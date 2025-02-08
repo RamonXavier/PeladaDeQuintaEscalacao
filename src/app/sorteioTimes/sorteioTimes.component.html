@@ -71,40 +71,57 @@
       <img src="https://i.ibb.co/MfRZDpz/LOGO-PELADA.png" width="200" height="200" alt="" srcset="">
     </div>
 
-
-    <div *ngIf="times.length > 0" id="teste" class="testec col-12">
-      <hr>
-      <div *ngFor="let time of times;  index as i" id="timesCriados{{i}}" class="time-card col-12 pb-0 mb-0">
-
-        <div class="col-12 d-flex justify-content-center">
-          <img [src]="emblemasTimes[i]" width="250" height="250"><br>
+    <div class="versaoDektop">
+      <div *ngIf="times.length > 0" id="teste" class="testec col-12">
+        <div *ngFor="let time of times;  index as i" class="col-12">
+            <div class="row">
+              <div class="col-2" style="margin-bottom: -97px;">
+                <div class="col text-center">
+                  <img [src]="emblemasTimes[i].imagem" width="200" height="200"><br>
+                  <b>
+                    <span>{{emblemasTimes[i].nome}}</span>
+                  </b>
+                </div>
+              </div>
+              <div *ngFor="let imagem of time.imagem;  index as img" class="col-2">
+                <div class="col text-center">
+                  <img [src]="imagem" alt="Jogador 1" style="background-image: url({{cardsFifa[i]}}); background-size: cover;" width="200" height="200">
+                  <b>
+                    <span>{{time.jogadores[img].nome}}</span>
+                  </b>
+                </div>
+              </div>
+            </div>
+            <hr *ngIf="i < times.length">
         </div>
+      </div>
+    </div>
 
-        <div class="text-center">
-          <h3>{{ time.nome }}</h3>
+    <div class="versaoMobile">
+      <div *ngIf="times.length > 0" id="teste" class="testec col-12">
+        <div class="row">
+          <div *ngFor="let time of times;  index as i" class="col-4">
+            <div class="col-12">
+              <div class="col text-center">
+                <img [src]="emblemasTimes[i].imagem" width="100" height="100"><br>
+                <b>
+                  <span style="font-size: 12px;">
+                    {{emblemasTimes[i].nome}} <br>
+                    {{time.nota}}
+                  </span>
+                </b>
+              </div>
+            </div>
+            <div *ngFor="let imagem of time.imagem; index as img" class="col-12">
+              <div class="col text-center">
+                <img [src]="imagem" alt="Jogador 1" style="background-image: url({{cardsFifa[i]}}); background-size: cover;" width="100" height="100">
+                <b>
+                  <span style="font-size: 12px;">{{time.jogadores[img].nome}}</span>
+                </b>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div *ngFor="let jogador of time.jogadores" class="text-center">
-          <span >{{ jogador.nome + ' / Pote: ' + jogador.pote}}</span><br>
-        </div>
-
-        <div class="text-center">
-          <h2><b>Nota total: {{ time.nota | number: '1.2-2' }}</b></h2>
-        </div>
-
-        <div class="gramado">
-          <img [src]="time.imagem[0]" alt="Jogador 1" class="player playerImg player1">
-          <img [src]="time.imagem[1]" alt="Jogador 2" class="player playerImg player2">
-          <img [src]="time.imagem[2]" alt="Jogador 3" class="player playerImg player3">
-          <img [src]="time.imagem[3]" alt="Jogador 4" class="player playerImg player4">
-          <img [src]="time.imagem[4]" alt="Jogador 5" class="player playerImg player5">
-          <span class="playerName playerName1">{{time.jogadores[0].nome}}</span>
-          <span class="playerName playerName2">{{time.jogadores[1].nome}}</span>
-          <span class="playerName playerName3">{{time.jogadores[2].nome}}</span>
-          <span class="playerName playerName4">{{time.jogadores[3].nome}}</span>
-          <span class="playerName playerName5">{{time.jogadores[4].nome}}</span>
-        </div>
-        <hr *ngIf="i < times.length">
       </div>
     </div>
   </div>

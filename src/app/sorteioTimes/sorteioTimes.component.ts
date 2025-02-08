@@ -6,6 +6,7 @@ import { TimeDto } from '../../shared/model/timeDto.model';
 import { LogGeracaoTimeService } from '../../shared/service/logGeracaoTime.service';
 import { CriarLoggeracaoTimeDto } from '../../shared/model/criarLoggeracaoTimeDto.model';
 import { JogadoresService } from '../../shared/service/jogadores.service';
+import { CardsFifaService } from '../../shared/service/cardsFifa.service';
 
 @Component({
   selector: 'sorteioTimes',
@@ -24,19 +25,22 @@ export class SorteioTimesComponent implements OnInit {
   public imagemAvulso = 'https://i.ibb.co/DKgB6RP/cris.png';
   public emblemasTimes: any[] =
   [
-    'https://i.ibb.co/PD1p9rT/boleiros-1.png',
-    'https://i.ibb.co/7zrnZLD/chuta-1.png',
-    'https://i.ibb.co/2q5D9Vr/donos-1.png'
+    {nome: 'Time Azul', imagem:'https://i.ibb.co/TBcbj38b/image.png'},//time azul
+    {nome: 'Time Preto', imagem:'https://i.ibb.co/60S6jBTx/image.png'},//time preto
+    {nome: 'Time Vermelho', imagem:'https://i.ibb.co/3yyrtBSf/image.png'},//time vermelho
   ];
+  public cardsFifa: string[] = [];
 
   constructor (
     private toastr: ToastrService,
     private _jogadoresService: JogadoresService,
+    private _cardsFifaService: CardsFifaService,
     private _logGeracaoTimeService: LogGeracaoTimeService){ }
 
 
   ngOnInit(): void {
     this.carregarJogadoresDoJsonConfigurado();
+    this.cardsFifa = this._cardsFifaService.buscarCards();
   }
 
   private carregarJogadoresDoJsonConfigurado(): void {

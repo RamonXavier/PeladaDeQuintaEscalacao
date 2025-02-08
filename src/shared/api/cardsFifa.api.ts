@@ -13,14 +13,14 @@ export class CardsFifaApi {
     cards =
     [
       'https://i.ibb.co/wZzZgfPd/CHAMPIONS-LEAGUE-RTTK-T23.png',
+      'https://i.ibb.co/kgPCwCL0/totw.png',
+      'https://i.ibb.co/bj2SRKww/rugby.png',
       'https://i.ibb.co/Q76GtKWw/futcard-liverpool-web-min.png',
       'https://i.ibb.co/45TjRHC/FUTURE-STARS-T23-min.png',
       'https://i.ibb.co/hFQFDvQH/gold1.png',
       'https://i.ibb.co/rGtc6sh6/gold12.png',
-      'https://i.ibb.co/bj2SRKww/rugby.png',
       'https://i.ibb.co/P3nqYSQ/icon-24.png',
       'https://i.ibb.co/Txm21wJq/azul2.png',
-      'https://i.ibb.co/kgPCwCL0/totw.png'
     ]
     return cards;
   }
