@@ -136,17 +136,17 @@ export class SorteioTimesComponent implements OnInit {
   }
 
   async salvar(): Promise<void> {
+    let elementoEscolhido = window.innerWidth >= 601 ? 0 : 1;
     const divs = document.querySelectorAll('.testec');
     for (let index = 0; index < 1; index++) {
-      for (const div of Array.from(divs)) {
-        const canvas = await html2canvas(div as HTMLElement, {
-          useCORS: true, // Permite capturar imagens de URLs externas
-          proxy: 'https://cors-anywhere.herokuapp.com/', // Opcional: Proxy para contornar problemas de CORS
-        });
-        const image = canvas.toDataURL('image/png');
-        this.downloadImage(image, `sorteioDaSemana.png`);
-        index++;
-      }
+      let div = divs[elementoEscolhido];
+      const canvas = await html2canvas(div as HTMLElement, {
+        useCORS: true, // Permite capturar imagens de URLs externas
+        proxy: 'https://cors-anywhere.herokuapp.com/', // Opcional: Proxy para contornar problemas de CORS
+      });
+      const image = canvas.toDataURL('image/png');
+      this.downloadImage(image, `sorteioDaSemana.png`);
+      index++;
     }
   }
 
