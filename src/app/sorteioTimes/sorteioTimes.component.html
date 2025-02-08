@@ -71,7 +71,7 @@
       <img src="https://i.ibb.co/MfRZDpz/LOGO-PELADA.png" width="200" height="200" alt="" srcset="">
     </div>
 
-    <div class="versaoDektop">
+    <div class="versaoDektop" style="background-color: #d9d9d9;">
       <div *ngIf="times.length > 0" id="teste" class="testec col-12">
         <div *ngFor="let time of times;  index as i" class="col-12">
             <div class="row">
@@ -80,8 +80,8 @@
                   <img [src]="emblemasTimes[i].imagem" width="200" height="200"><br>
                   <b>
                     <span>
-                      {{emblemasTimes[i].nome}} / 
-                      {{time.nota}}
+                      {{emblemasTimes[i].nome}} /
+                      {{ time.nota | number:'1.2-2' }}
                     </span>
                   </b>
                 </div>
@@ -100,7 +100,7 @@
       </div>
     </div>
 
-    <div class="versaoMobile">
+    <div class="versaoMobile" style="background-color: #d9d9d9;">
       <div *ngIf="times.length > 0" id="teste" class="testec col-12">
         <div class="row">
           <div *ngFor="let time of times;  index as i" class="col-4">
@@ -110,7 +110,7 @@
                 <b>
                   <span style="font-size: 12px;">
                     {{emblemasTimes[i].nome}} <br>
-                    {{time.nota}}
+                    {{ time.nota | number:'1.2-2' }}
                   </span>
                 </b>
               </div>
@@ -119,7 +119,7 @@
               <div class="col text-center">
                 <img [src]="imagem" alt="Jogador 1" style="background-image: url({{cardsFifa[i]}}); background-size: cover;" width="100" height="100">
                 <b>
-                  <span style="font-size: 12px;">{{time.jogadores[img].nome}}</span>
+                  <span style="font-size: 9px;">{{time.jogadores[img].nome}}</span>
                 </b>
               </div>
             </div>
