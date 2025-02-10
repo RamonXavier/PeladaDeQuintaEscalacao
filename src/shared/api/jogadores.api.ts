@@ -44,8 +44,8 @@ export class JogadoresApi {
       },
       {
           "id": 4,
-          "nome": "CARLIM",
-          "nota": 8.8,
+          "nome": "ERICO",
+          "nota": 7.8,
           "coroa": false,
           "img":"https://i.ibb.co/wrNBrCgW/image.png",
           "pote":"2",
