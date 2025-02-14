@@ -44,10 +44,10 @@ export class JogadoresApi {
       },
       {
           "id": 4,
-          "nome": "ERICO",
+          "nome": "RAPHAEL RUFINO",
           "nota": 7.8,
           "coroa": false,
-          "img":"https://i.ibb.co/wrNBrCgW/image.png",
+          "img": "https://i.ibb.co/HDz6f3GQ/Raphael-Rufino.png",
           "pote":"2",
           "pontuacao":"➖",
           "gols":"0"
@@ -191,7 +191,7 @@ export class JogadoresApi {
           "id": 17,
           "nome": "MARCELO",
           "nota": 9.0,
-          "img":"https://i.ibb.co/cC3dt2K/marcelo.png",
+          "img":"https://i.ibb.co/fVFfQw40/marcelo-sem-fundo.png",
           "pontuacao":"➖",
           "gols":"0"
       }
@@ -204,9 +204,9 @@ export class JogadoresApi {
     jogadoresAvulsos = [
       {
         "id": 18,
-        "nome": "RAPHAEL RUFINO",
+        "nome": "ERICO",
         "nota": 9.0,
-        "img":"https://i.ibb.co/HDz6f3GQ/Raphael-Rufino.png",
+        "img":"https://i.ibb.co/wrNBrCgW/image.png",
         "pontuacao":"➖",
         "gols":"0"
       },
