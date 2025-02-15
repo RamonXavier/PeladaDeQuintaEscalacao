@@ -13,48 +13,30 @@
   </div>
 
   <hr>
-
-  <div class="col-12">
-    <button class="btn btn-primary" (click)="editandoJogadores = !editandoJogadores" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-      {{editandoJogadores ? 'Fechar edição de jogadores' : 'Abrir edição de jogadores'}}
-    </button>
-
-    <div class="collapse" id="collapseExample">
-      <div class="card card-body">
-        <h2>Trocar jogadores</h2>
-        <div *ngFor="let jogador of jogadores;  index as i">
-            <div class="row">
-              <div class="col-sm-1 col-12">
-                <label for="numero">Nº:</label>
-                <input class="form-control" type="text" id="numero" [(ngModel)]="jogador.id" name="numero" required disabled/>
-              </div>
-
-              <div class="col-sm-7 col-12">
-                <label for="nome">Nome do Jogador:</label>
-                <input class="form-control" (keyup)="jogador.img = imagemAvulso" type="text" id="nome" [(ngModel)]="jogador.nome" name="nome" required />
-              </div>
-
-              <div class="col-sm-2 col-12">
-                <label for="nota">Nota:</label>
-                <input class="form-control" type="number" id="nota" [(ngModel)]="jogador.nota" name="nota" required />
-              </div>
-
-              <div class="col-sm-2 col-12">
-                <label for="pote">Pote:</label>
-                <input class="form-control" type="number" id="pote" [(ngModel)]="jogador.pote" name="pote" required disabled="true" />
-              </div>
+    <button type="button" class="btn btn-primary" (click)="editandoJogadores = !editandoJogadores">Abrir/Fechar edição de jogadores</button>
+    <h2>Trocar jogadores</h2>
+    <div *ngIf="editandoJogadores" class="row">
+      <div *ngFor="let jogador of jogadores;  index as i" class="card card-body col-3 p-2 m-2">
+          <div class="row">
+            <div class="col-sm-12 col-12">
+              <label for="nome">Nome do Jogador:</label>
+              <input class="form-control" (keyup)="verificarNomeJogador(jogador)" type="text" id="nome" [(ngModel)]="jogador.nome" name="nome" required />
             </div>
-            <hr *ngIf="i < jogadores.length">
-        </div>
-        <div class="d-grid gap-2 pt-2">
-          <button class="btn btn-secondary"  data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" type="button" (click)="editarJogadores(jogadores); editandoJogadores = !editandoJogadores">
-            Finalizar edição
-          </button>
-        </div>
+
+            <div class="col-sm-5 col-12">
+              <label for="nota">Nota:</label>
+              <input class="form-control" type="number" id="nota" [(ngModel)]="jogador.nota" name="nota" required />
+            </div>
+
+            <div class="col-sm-5 col-12">
+              <label for="pote">Pote:</label>
+              <input class="form-control" type="number" id="pote" [(ngModel)]="jogador.pote" name="pote" required />
+            </div>
+          </div>
+          <hr *ngIf="i < jogadores.length">
+          <div class="text-center" [ngStyle]="{'background-color': obterCorPote(jogador.pote)}">POTE {{jogador.pote}}</div>
       </div>
     </div>
-  </div>
-
   <hr>
 
   <div class="col-12">
@@ -67,6 +49,10 @@
   <hr>
 
   <div class="col-12">
+    <div *ngIf="erroQuantidadeJogadoresEmPotes" class="alert alert-danger" role="alert">
+      Os times não foram gerados. Revise a quantidade de jogador em cada pote
+    </div>
+
     <div *ngIf="jaGerouTimes" class="col-12 pb-3 d-flex justify-content-center">
       <img src="https://i.ibb.co/MfRZDpz/LOGO-PELADA.png" width="200" height="200" alt="" srcset="">
     </div>

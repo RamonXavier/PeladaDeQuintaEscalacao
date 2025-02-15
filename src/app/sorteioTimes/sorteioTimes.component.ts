@@ -20,6 +20,7 @@ export class SorteioTimesComponent implements OnInit {
   public jaGerouTimes: boolean = false;
   public editandoJogadores: boolean = false;
   public jogadores: JogadorDto[] = [];
+  public jogadoresBkp: JogadorDto[] = [];
   public times: TimeDto[] = [];
   public imagemCardFifa: string = "https://i.ibb.co/3Nw177S/card-fifa.png";
   public imagemAvulso = 'https://i.ibb.co/DKgB6RP/cris.png';
@@ -30,6 +31,7 @@ export class SorteioTimesComponent implements OnInit {
     {nome: 'Time Vermelho', imagem:'https://i.ibb.co/3yyrtBSf/image.png'},//time vermelho
   ];
   public cardsFifa: string[] = [];
+  public erroQuantidadeJogadoresEmPotes: boolean = false;
 
   constructor (
     private toastr: ToastrService,
@@ -46,56 +48,61 @@ export class SorteioTimesComponent implements OnInit {
   private carregarJogadoresDoJsonConfigurado(): void {
     this.jogadores = [];
     this.jogadores = this._jogadoresService.buscarMensalistas();
+
+    this.jogadoresBkp = [];
+    this.jogadoresBkp = this._jogadoresService.buscarMensalistas();
   }
 
   public gerarTimes(): void {
-    const jogadoresCoroas = this.jogadores.filter((j) => j.coroa);
-    const jogadoresComuns = this.jogadores.filter((j) => !j.coroa);
+    try {
+      const jogadoresCoroas = this.jogadores.filter((j) => j.coroa);
+      const jogadoresComuns = this.jogadores.filter((j) => !j.coroa);
 
-    if (jogadoresCoroas.length < 3) {
-      this.toastr.error('Número insuficiente de jogadores coroas', '😢Ops!');
-      this.toastr.error('Entre em contato com o caça rato.', '');
-      return;
-    }
-
-    if (jogadoresComuns.length < 12) {
-      this.toastr.error('Número insuficiente de jogadores comuns', '😢Ops!');
-      this.toastr.error('Entre em contato com o caça rato.', '');
-      return;
-    }
-
-    this.times = [];
-
-    const timesPadrao: TimeDto[] = [
-      { nome: '1 - Boleiros e parceiros', jogadores: [], nota: 0, imagem: []},
-      { nome: '2 - Chuta que é gol', jogadores: [], nota: 0, imagem: []},
-      { nome: '3 - Os donos do jogo', jogadores: [], nota: 0, imagem: []},
-    ];
-
-    this.distribuirJogadoresCoroasNosTimes(timesPadrao, jogadoresCoroas);
-    this.distribuirJogadoresComunsNosTimes(timesPadrao, jogadoresComuns);
-
-
-
-    this.jaGerouTimes = true;
-    this.times = timesPadrao;
-
-    let logTimeGerado: CriarLoggeracaoTimeDto[] = [];
-    this.times.forEach(timePercorrido => {
-      let logTimeGeradoPercorrido: CriarLoggeracaoTimeDto =
-      {
-        dataGeracaoTime: new Date(),
-        jogadores: timePercorrido.jogadores,
-        nome: timePercorrido.nome,
-        nota: timePercorrido.nota.toString()
+      if (jogadoresCoroas.length < 3) {
+        this.toastr.error('Número insuficiente de jogadores coroas', '😢Ops!');
+        this.toastr.error('Entre em contato com o caça rato.', '');
+        return;
       }
-      logTimeGerado.push(logTimeGeradoPercorrido)
-    });
 
-    this._logGeracaoTimeService.criar(logTimeGerado).then(resultado =>  {
-      this.toastr.success('Weeeeaaaa!!!😎');
-    })
-    this.toastr.success('Os 3 times foram criados', '🚀Tudo certo!🚀');
+      if (jogadoresComuns.length < 12) {
+        this.toastr.error('Número insuficiente de jogadores comuns', '😢Ops!');
+        this.toastr.error('Entre em contato com o caça rato.', '');
+        return;
+      }
+
+      this.times = [];
+
+      const timesPadrao: TimeDto[] = [
+        { nome: '1 - Boleiros e parceiros', jogadores: [], nota: 0, imagem: []},
+        { nome: '2 - Chuta que é gol', jogadores: [], nota: 0, imagem: []},
+        { nome: '3 - Os donos do jogo', jogadores: [], nota: 0, imagem: []},
+      ];
+
+      this.distribuirJogadoresCoroasNosTimes(timesPadrao, jogadoresCoroas);
+      this.distribuirJogadoresComunsNosTimes(timesPadrao, jogadoresComuns);
+
+      this.jaGerouTimes = true;
+      this.times = timesPadrao;
+
+      let logTimeGerado: CriarLoggeracaoTimeDto[] = [];
+      this.times.forEach(timePercorrido => {
+        let logTimeGeradoPercorrido: CriarLoggeracaoTimeDto =
+        {
+          dataGeracaoTime: new Date(),
+          jogadores: timePercorrido.jogadores,
+          nome: timePercorrido.nome,
+          nota: timePercorrido.nota.toString()
+        }
+        logTimeGerado.push(logTimeGeradoPercorrido)
+      });
+
+      this._logGeracaoTimeService.criar(logTimeGerado).then(resultado =>  {
+        this.toastr.success('Weeeeaaaa!!!😎');
+      })
+      this.toastr.success('Os 3 times foram criados', '🚀Tudo certo!🚀');
+    } catch (error) {
+      this.toastr.error(error?.toString(), '😣Ops!');
+    }
   }
 
   private distribuirJogadoresCoroasNosTimes(timesPadrao: TimeDto[], jogadoresCoroas: JogadorDto[]):void {
@@ -114,25 +121,31 @@ export class SorteioTimesComponent implements OnInit {
   }
 
   private distribuirJogadoresComunsNosTimes(timesPadrao: TimeDto[], jogadoresNormais: JogadorDto[]): void {
-    let jogadoresNormaisDisponiveis: JogadorDto[] = [];
-    let jogadoresNormaisJaSelecionados: number[] = [];
+      try {
+        let jogadoresNormaisDisponiveis: JogadorDto[] = [];
+        let jogadoresNormaisJaSelecionados: number[] = [];
 
-    const quantidadeMaximaJogadoresNoTime = 5;
+        const quantidadeMaximaJogadoresNoTime = 5;
 
-    for (const timePercorrido of timesPadrao) {
-      let potesJaAdicionados: string[] = [];
-      while (timePercorrido.jogadores.length < quantidadeMaximaJogadoresNoTime) {
-        jogadoresNormaisDisponiveis = jogadoresNormais.filter(x => !jogadoresNormaisJaSelecionados.includes(x.id) && !potesJaAdicionados.includes(x.pote!));
-        const jogadorParaAdicionarAoTime = jogadoresNormaisDisponiveis.splice(Math.floor(Math.random() * jogadoresNormaisDisponiveis.length), 1)[0];
+        for (const timePercorrido of timesPadrao) {
+          let potesJaAdicionados: string[] = [];
+          while (timePercorrido.jogadores.length < quantidadeMaximaJogadoresNoTime) {
+            jogadoresNormaisDisponiveis = jogadoresNormais.filter(x => !jogadoresNormaisJaSelecionados.includes(x.id) && !potesJaAdicionados.includes(x.pote!));
+            const jogadorParaAdicionarAoTime = jogadoresNormaisDisponiveis.splice(Math.floor(Math.random() * jogadoresNormaisDisponiveis.length), 1)[0];
 
-        jogadoresNormaisJaSelecionados.push(jogadorParaAdicionarAoTime.id);
-        potesJaAdicionados.push(jogadorParaAdicionarAoTime.pote!);
+            jogadoresNormaisJaSelecionados.push(jogadorParaAdicionarAoTime.id);
+            potesJaAdicionados.push(jogadorParaAdicionarAoTime.pote!);
 
-        timePercorrido.jogadores.push(jogadorParaAdicionarAoTime);
-        timePercorrido.imagem.push(jogadorParaAdicionarAoTime.img);
-        timePercorrido.nota += jogadorParaAdicionarAoTime.nota;
+            timePercorrido.jogadores.push(jogadorParaAdicionarAoTime);
+            timePercorrido.imagem.push(jogadorParaAdicionarAoTime.img);
+            timePercorrido.nota += jogadorParaAdicionarAoTime.nota;
+            this.erroQuantidadeJogadoresEmPotes = false;
+          }
+        }
+      } catch (error) {
+        this.erroQuantidadeJogadoresEmPotes = true;
+        throw new Error("Os times não foram gerados. Revise a quantidade de jogador em cada pote");
       }
-    }
   }
 
   async salvar(): Promise<void> {
@@ -179,5 +192,28 @@ export class SorteioTimesComponent implements OnInit {
     });
 
     this.times = [];
+  }
+
+  public verificarNomeJogador(jogador: JogadorDto){
+    let jogadorEncontrado = this.jogadoresBkp.find(x=>x.nome?.toUpperCase() == jogador.nome?.toUpperCase());
+    jogadorEncontrado ? jogador.img = jogadorEncontrado.img : jogador.img = this.imagemAvulso;
+  }
+
+  public obterCorPote(pote?: string): string{
+    switch (pote) {
+      case "1":
+        return  '#6cf04b'
+      case "2":
+        return  '#f0d852'
+      case "3":
+        return  '#f0933c'
+      case "4":
+        return  '#ee5d39'
+      case "5":
+        return  '#ee3b3b'
+
+      default:
+        return  '#a5a5a5'
+    }
   }
 }
