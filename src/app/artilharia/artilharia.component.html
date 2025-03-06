@@ -97,9 +97,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let jogador of artilhariaListagem; index as i">
+          <tr *ngFor="let jogador of artilhariaListagem; index as i" [ngClass]="getClassByIndex(i)">
             <td>
-              <span style="font-size: 60px;">{{i}}</span>
+              <span style="font-size: 60px;">{{i + 1}}</span>
             </td>
             <td>
               <img class="player playerImg player{{i}}" [src]="jogador.imagemJogador" alt="Jogador {{i}}"><br>
@@ -109,7 +109,7 @@
               <span class="text-white" style="font-size: 30px;"><b>{{jogador.totalGols}}</b></span>
             </td>
             <td><b>{{jogador.janeiro}}</b></td>
-            <td><b>{{jogador.janeiro}}</b></td>
+            <td><b>{{jogador.fevereiro}}</b></td>
             <td><b>{{jogador.marco}}</b></td>
             <td><b>{{jogador.abril}}</b></td>
             <td><b>{{jogador.maio}}</b></td>

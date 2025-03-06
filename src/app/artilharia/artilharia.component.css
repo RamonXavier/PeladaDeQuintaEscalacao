@@ -64,6 +64,22 @@ h3 {
   left: 443px;
 }
 
+.nivel-bom {
+  --bs-table-bg: #28a746c5 !important; /* Verde */
+  color: white;
+}
+
+.nivel-moderado {
+  --bs-table-bg: #ffc10793 !important; /* Amarelo */
+  color: black;
+}
+
+.nivel-critico {
+  --bs-table-bg: #da14148e !important; /* Vermelho */
+  color: white;
+}
+
+
 /* RESPONSIVIDADE MOBILE */
 
 @media only screen and (max-width: 600px) {

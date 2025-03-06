@@ -118,4 +118,14 @@ export class ArtilhariaComponent implements OnInit {
           }
     });
   }
+
+  public getClassByIndex(index: number): string {
+    if (index < 5) {
+      return 'nivel-bom';  // Verde
+    } else if (index < 10) {
+      return 'nivel-moderado';  // Amarelo
+    } else {
+      return 'nivel-critico';  // Vermelho
+    }
+  }
 }
