@@ -1,0 +1,128 @@
+<div class="container">
+
+  <div class="text-center">
+    <h1>
+      Artilharia <br> PELADA DE QUINTA
+    </h1>
+  </div>
+
+  <div class="col-12">
+    <div *ngIf="!jaGerouNota" class="col-12 d-flex justify-content-center">
+      <img src="https://i.ibb.co/MfRZDpz/LOGO-PELADA.png" width="300" height="300">
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="d-grid gap-2 pt-3">
+      <button [disabled]="true" class="btn btn-primary btn-block"  data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseEditarPontuacao">
+        {{editandoJogadores ? 'Fechar edição de jogadores' : 'Abrir edição de jogadores'}}
+      </button>
+      <!-- <button [disabled]="true" class="btn btn-primary btn-block" (click)="editandoJogadores = !editandoJogadores" data-bs-toggle="collapse" href="#collapseEditarPontuacao" role="button" aria-expanded="false" aria-controls="collapseEditarPontuacao">
+        {{editandoJogadores ? 'Fechar edição de jogadores' : 'Abrir edição de jogadores'}}
+      </button> -->
+    </div>
+
+    <div class="col-12 pt-2">
+      <div class="d-grid gap-2">
+        <button class="btn btn-block btn-primary pr-2" (click)="salvar()">Exportar Artilharia</button>
+      </div>
+    </div>
+
+    <div class="collapse" id="collapseEditarPontuacao">
+      <div class="card card-body">
+        <h2>Trocar jogadores</h2>
+        <div *ngFor="let jogador of jogadores;  index as i">
+            <div class="row">
+              <div class="col-sm-1 col-12">
+                <label for="numero">Nº:</label>
+                <input class="form-control" type="text" id="numero" [(ngModel)]="jogador.id" name="numero" required disabled/>
+              </div>
+
+              <div class="col-sm-3 col-12">
+                <label for="nome">Nome do Jogador:</label>
+                <input class="form-control" (keyup)="jogador.img = imagemAvulso" type="text" id="nome" [(ngModel)]="jogador.nome" name="nome" required />
+              </div>
+
+              <div class="col-sm-4 col-12">
+                <label for="nota">Pontuação:</label>
+                <input class="form-control" type="number" id="nota" [(ngModel)]="jogador.nota" name="nota" required />
+              </div>
+
+              <div class="col-sm-2 col-12">
+                <label for="desempenho">Desempenho:</label>
+                <select class="form-control" id="desempenho" [(ngModel)]="jogador.pontuacao">
+                  <option value="🔼🔼🔼">🔼🔼🔼</option>
+                  <option value="🔼🔼">🔼🔼</option>
+                  <option value="🔼">🔼</option>
+                  <option value="➖" selected>➖</option>
+                  <option value="🔻">🔻</option>
+                  <option value="🔻🔻">🔻🔻</option>
+                  <option value="🔻🔻🔻">🔻🔻🔻</option>
+                </select>
+              </div>
+              <div class="col-sm-2 col-12">
+                <label for="gols">Gols:</label>
+                <input class="form-control" type="number" id="gols" [(ngModel)]="jogador.gols" name="gols" required />
+              </div>
+            </div>
+            <hr *ngIf="i < jogadores.length">
+        </div>
+        <div class="d-grid gap-2 pt-2">
+          <button class="btn btn-secondary"  data-bs-toggle="collapse" href="#collapseEditarPontuacao" role="button" aria-expanded="false" aria-controls="collapseEditarPontuacao" type="button" (click)="pontuarJogadores(jogadores); editandoJogadores = false">
+            Salvar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="testec playerCard ocultar-em-mobile">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">Classificação</th>
+            <th scope="col">Atleta</th>
+            <th scope="col">Total de Gols</th>
+            <th scope="col">Janeiro</th>
+            <th scope="col">Fevereiro</th>
+            <th scope="col">Março</th>
+            <th scope="col">Abril</th>
+            <th scope="col">Maio</th>
+            <th scope="col">Junho</th>
+            <th scope="col">Julho</th>
+            <th scope="col">Agosto</th>
+            <th scope="col">Setembro</th>
+            <th scope="col">Outubro</th>
+            <th scope="col">Novembro</th>
+            <th scope="col">Dezembro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let jogador of artilhariaListagem; index as i">
+            <td>
+              <span style="font-size: 60px;">{{i}}</span>
+            </td>
+            <td>
+              <img class="player playerImg player{{i}}" [src]="jogador.imagemJogador" alt="Jogador {{i}}"><br>
+              <span class="text-white text-center">{{jogador.jogador}}</span><br>
+            </td>
+            <td>
+              <span class="text-white" style="font-size: 30px;"><b>{{jogador.totalGols}}</b></span>
+            </td>
+            <td><b>{{jogador.janeiro}}</b></td>
+            <td><b>{{jogador.janeiro}}</b></td>
+            <td><b>{{jogador.marco}}</b></td>
+            <td><b>{{jogador.abril}}</b></td>
+            <td><b>{{jogador.maio}}</b></td>
+            <td><b>{{jogador.junho}}</b></td>
+            <td><b>{{jogador.julho}}</b></td>
+            <td><b>{{jogador.agosto}}</b></td>
+            <td><b>{{jogador.setembro}}</b></td>
+            <td><b>{{jogador.outubro}}</b></td>
+            <td><b>{{jogador.novembro}}</b></td>
+            <td><b>{{jogador.dezembro}}</b></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

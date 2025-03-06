@@ -12,6 +12,7 @@ import { MenuComponent } from './menu/menu.component';
 import { PontuacaoJogadoresComponent } from './pontuacaoJogadores/pontuacaoJogadores.component';
 import { GeracaoIndividualComponent } from './geracaoIndividual/geracaoIndividual.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ArtilhariaComponent } from './artilharia/artilharia.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MenuComponent,
     PontuacaoJogadoresComponent,
     GeracaoIndividualComponent,
+    ArtilhariaComponent
    ],
   imports: [
     BrowserModule,
