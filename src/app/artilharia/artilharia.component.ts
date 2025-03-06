@@ -36,6 +36,7 @@ export class ArtilhariaComponent implements OnInit {
         jogador.imagemJogador = this.jogadores.find(x=>x.id == jogador.idJogador)?.img;
         jogador.totalGols = jogador.janeiro + jogador.fevereiro + jogador.marco + jogador.abril + jogador.maio + jogador.junho + jogador.julho + jogador.agosto + jogador.setembro + jogador.outubro + jogador.novembro + jogador.dezembro;
       });
+      this.artilhariaListagem.sort((a, b) => b.totalGols - a.totalGols);
     });
   }
 

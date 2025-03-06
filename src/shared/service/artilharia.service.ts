@@ -43,7 +43,6 @@ export class ArtilhariaService {
             id: apiData['id'],
           })
         }
-        dadosTratados.sort((a, b) => b.totalGols - a.totalGols);
         resolve(dadosTratados);
       }, erro => {
         this._toastService.error('', 'Houve uma falha ao buscar a artilharia.', { toastClass: 'toast ngx-toastr', closeButton: true });
