@@ -105,9 +105,29 @@
           </div>
         </div>
         <div class="d-grid gap-2 pt-2">
-          <button class="btn btn-secondary"  data-bs-toggle="collapse" href="#collapseEditarPontuacao" role="button" aria-expanded="false" aria-controls="collapseEditarPontuacao" type="button" (click)="pontuarJogadores(artilhariaListagem); editandoJogadores = false">
+          <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Salvar
           </button>
+        </div>
+      </div>
+    </div>
+
+        <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h2 class="fs-5">Digite a senha</h2>
+            <input type="text" [(ngModel)]="senhaDigitada">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="pontuarJogadores(artilhariaListagem, senhaDigitada)">Save changes</button>
+          </div>
         </div>
       </div>
     </div>

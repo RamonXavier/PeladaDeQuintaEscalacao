@@ -5,6 +5,7 @@ import { JogadoresService } from '../../shared/service/jogadores.service';
 import { JogadorDto } from '../../shared/model/jogadorDto.model';
 import { ArtilhariaService } from '../../shared/service/artilharia.service';
 import { BuscarArtilhariaDto } from '../../shared/model/artilharia/buscarArtilhariaDto.model';
+import { AtualizacaoArtilhariaJsonDto } from '../../shared/model/artilharia/atualizacaoArtilhariaJsonDto.model';
 
 @Component({
   selector: 'app-artilharia',
@@ -24,6 +25,12 @@ export class ArtilhariaComponent implements OnInit {
   public imagemCardFifa: string = "https://i.ibb.co/3Nw177S/card-fifa.png";
   public imagemAvulso = 'https://i.ibb.co/DKgB6RP/cris.png';
   public gerandoArtilharia: boolean = false;
+  public datasDeAtualizacao: AtualizacaoArtilhariaJsonDto[] = [];
+
+  public senhaDigitada: string = '';
+  public senhaFelipe = "fleipe33";
+  public senhaRamon = "caça12";
+  public senhaFlavin = "flavim11";
 
   constructor (private toastr: ToastrService, private _jogadoresService: JogadoresService, private _artilhariaService: ArtilhariaService){
   }
@@ -38,7 +45,10 @@ export class ArtilhariaComponent implements OnInit {
     this.atualizandoArtilharia = true;
 
     this._artilhariaService.buscarTodos().then(retorno => {
-      this.artilhariaListagem = retorno;
+      let dados = JSON.parse(retorno.artilhariaJson!);
+      this.datasDeAtualizacao = JSON.parse(retorno.dataAtualizacao!);
+
+      this.artilhariaListagem = dados;
       this.artilhariaListagem.forEach(jogador => {
         jogador.imagemJogador = this.jogadores.find(x => x.id.toString() == jogador.idJogador)?.img;
         jogador.totalGols = jogador.janeiro + jogador.fevereiro + jogador.marco + jogador.abril + jogador.maio + jogador.junho + jogador.julho + jogador.agosto + jogador.setembro + jogador.outubro + jogador.novembro + jogador.dezembro;
@@ -94,15 +104,21 @@ export class ArtilhariaComponent implements OnInit {
     }
   }
 
-  public pontuarJogadores(novaArtilharia: BuscarArtilhariaDto[]): void{
-    this.atualizandoArtilharia = true;
-    this.artilhariaListagem = novaArtilharia;
-    this.toastr.success('Os jogadores foram pontuados', '🚀Tudo certo!🚀');
-    this._artilhariaService.pontuarJogadores(this.artilhariaListagem).finally(() => {
-      this.tratarCarregamentoArtilharia();
-    });
+  public pontuarJogadores(novaArtilharia: BuscarArtilhariaDto[], senha: string): void{
 
-    this.jaGerouNota = true;
+    if(senha == this.senhaDigitada || senha == this.senhaFelipe || senha == this.senhaRamon){
+      this.atualizandoArtilharia = true;
+      this.artilhariaListagem = novaArtilharia;
+      this.toastr.success('Os jogadores foram pontuados', '🚀Tudo certo!🚀');
+      this._artilhariaService.pontuarJogadores(this.artilhariaListagem, this.datasDeAtualizacao, senha).finally(() => {
+        this.tratarCarregamentoArtilharia();
+      });
+
+      this.jaGerouNota = true;
+    }
+    else{
+      this.toastr.success('Senha inválida', 'Ops.');
+    }
   }
 
   private downloadImage(dataUrl: string, filename: string): void {
