@@ -1,6 +1,6 @@
 export class BuscarArtilhariaDto {
   id?: number;
-  idJogador?: number;
+  idJogador?: string;
   jogador?: string;
   janeiro: number = 0;
   fevereiro: number = 0;

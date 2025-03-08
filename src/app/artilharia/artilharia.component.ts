@@ -16,6 +16,7 @@ import { BuscarArtilhariaDto } from '../../shared/model/artilharia/buscarArtilha
 
 export class ArtilhariaComponent implements OnInit {
   public artilhariaListagem: BuscarArtilhariaDto[] = [];
+  public atualizandoArtilharia:boolean = false;
   public jaGerouNota:boolean = false;
   public editandoJogadores: boolean = false;
   public jogadores: JogadorDto[] = [];
@@ -24,20 +25,26 @@ export class ArtilhariaComponent implements OnInit {
   public imagemAvulso = 'https://i.ibb.co/DKgB6RP/cris.png';
   public gerandoArtilharia: boolean = false;
 
-  constructor (private toastr: ToastrService, private _jogadoresService: JogadoresService, private _artilharia: ArtilhariaService){
+  constructor (private toastr: ToastrService, private _jogadoresService: JogadoresService, private _artilhariaService: ArtilhariaService){
   }
 
 
   ngOnInit(): void {
     this.carregarJogadores();
+    this.tratarCarregamentoArtilharia();
+  }
 
-    this._artilharia.buscarTodos().then(retorno => {
+  private tratarCarregamentoArtilharia() {
+    this.atualizandoArtilharia = true;
+
+    this._artilhariaService.buscarTodos().then(retorno => {
       this.artilhariaListagem = retorno;
       this.artilhariaListagem.forEach(jogador => {
-        jogador.imagemJogador = this.jogadores.find(x=>x.id == jogador.idJogador)?.img;
+        jogador.imagemJogador = this.jogadores.find(x => x.id.toString() == jogador.idJogador)?.img;
         jogador.totalGols = jogador.janeiro + jogador.fevereiro + jogador.marco + jogador.abril + jogador.maio + jogador.junho + jogador.julho + jogador.agosto + jogador.setembro + jogador.outubro + jogador.novembro + jogador.dezembro;
       });
       this.artilhariaListagem.sort((a, b) => b.totalGols - a.totalGols);
+      this.atualizandoArtilharia = false;
     });
   }
 
@@ -87,9 +94,14 @@ export class ArtilhariaComponent implements OnInit {
     }
   }
 
-  public pontuarJogadores(novosJogadores: JogadorDto[]): void{
-    this.jogadores = novosJogadores;
+  public pontuarJogadores(novaArtilharia: BuscarArtilhariaDto[]): void{
+    this.atualizandoArtilharia = true;
+    this.artilhariaListagem = novaArtilharia;
     this.toastr.success('Os jogadores foram pontuados', '🚀Tudo certo!🚀');
+    this._artilhariaService.pontuarJogadores(this.artilhariaListagem).finally(() => {
+      this.tratarCarregamentoArtilharia();
+    });
+
     this.jaGerouNota = true;
   }
 

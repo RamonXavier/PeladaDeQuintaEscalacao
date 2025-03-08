@@ -2,6 +2,7 @@ import { ToastrService } from "ngx-toastr";
 import { Injectable } from "@angular/core";
 import { ArtilhariaApi } from '../api/artilharia.api';
 import { BuscarArtilhariaDto } from "../model/artilharia/buscarArtilhariaDto.model";
+import { ArtilhariaJsonDto } from "../model/artilharia/artilhariaJsonDto.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,38 +17,32 @@ export class ArtilhariaService {
 
   public buscarTodos(): Promise<BuscarArtilhariaDto[]> {
     return new Promise((resolve, reject) => {
-      this._artilhariaApi.buscarTodos().subscribe((retorno: any[]) => {
+      this._artilhariaApi.buscarTodos().subscribe((retorno: ArtilhariaJsonDto) => {
         let dadosTratados: BuscarArtilhariaDto[] = [];
-
-        retorno.forEach(element => {
-          mapearApiParaObjeto(element);
-        });
-
-        function mapearApiParaObjeto(apiData: any): void {
-          dadosTratados.push({
-            janeiro: parseInt(apiData['JANEIRO']),
-            fevereiro: parseInt(apiData['FEVEREIRO']),
-            marco: parseInt(apiData['MARCO']),
-            abril: parseInt(apiData['ABRIL']),
-            maio: parseInt(apiData['MAIO']),
-            junho: parseInt(apiData['JUNHO']),
-            julho: parseInt(apiData['JULHO']),
-            agosto: parseInt(apiData['AGOSTO']),
-            setembro: parseInt(apiData['SETEMBRO']),
-            outubro: parseInt(apiData['OUTUBRO']),
-            novembro: parseInt(apiData['NOVEMBRO']),
-            dezembro: parseInt(apiData['DEZEMBRO']),
-            totalGols: 0,
-            jogador: apiData['Jogador'],
-            idJogador: apiData['IdJogador'],
-            id: apiData['id'],
-          })
-        }
+        let dados = JSON.parse(retorno.artilhariaJson!);
+        dadosTratados = dados;
         resolve(dadosTratados);
       }, erro => {
         this._toastService.error('', 'Houve uma falha ao buscar a artilharia.', { toastClass: 'toast ngx-toastr', closeButton: true });
         reject(erro);
       });
+    });
+  }
+
+  public pontuarJogadores(artilharia: BuscarArtilhariaDto[]): Promise<void> {
+    return new Promise((resolve, reject) => {
+      let artilhariaJson: ArtilhariaJsonDto = {
+        id: 1,
+        artilhariaJson: JSON.stringify(artilharia)
+      };
+
+      this._artilhariaApi.atualizar(artilhariaJson).subscribe((retorno: void) =>
+        {
+          resolve();
+        },
+        erro => {
+          this._toastService.error('', 'Houve uma falha ao atualizar a artilharia do jogador', { toastClass: 'toast ngx-toastr', closeButton: true })
+        });
     });
   }
 }
