@@ -75,7 +75,33 @@
       </div>
     </div>
 
-    <div class="testec playerCard ocultar-em-mobile">
+    <div class="col-12">
+      <div id="storyDiv" class="testec story">
+        <div class="row col-12">
+          <div class="col-12 p-5">
+            <div class="text-center">
+              <img src="https://i.ibb.co/MfRZDpz/LOGO-PELADA.png" width="100" height="100">
+              <span style="font-size: 44px;">Artilharia - Pelada de 5ª</span>
+            </div>
+
+            <div class="artilharia-cardAtleta card">
+              <div *ngFor="let jogador of artilhariaListagem; index as i" [ngClass]="getClassByIndex(i, jogador.idJogador!.toString())" class="artilharia-atleta p-3 row col-12">
+                <div class="col-2 artilharia-col-rostoJogador" [ngClass]="getAjusteImagem(jogador.idJogador!.toString())" [ngStyle]="{'background-image': 'url('+jogador.imagemJogador+')'}"></div>
+                <div class="col-4 artilharia-detalhesJjogador">
+                  {{jogador.jogador}}
+                </div>
+                <div class="col artilharia-detalhesJjogador">
+                  {{jogador.totalGols}} gols
+                </div>
+              </div>
+              <div class="row col-12 patrocinadores"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="testec playerCard ocultar-em-mobile">
       <table class="table table-dark">
         <thead>
           <tr>
@@ -123,6 +149,6 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </div> -->
   </div>
 </div>

@@ -1,6 +1,5 @@
 <app-menu (alterarMenu)="alterarMenu($event)" [menuEscolhido]="menuEscolhido"></app-menu>
 
-
 <sorteioTimes *ngIf="menuEscolhido == menuSorteio"></sorteioTimes>
 <pontuacaoJogadores *ngIf="menuEscolhido == menuPontuacao"></pontuacaoJogadores>
 <app-geracaoIndividual *ngIf="menuEscolhido == menuGerarIndividual"></app-geracaoIndividual>

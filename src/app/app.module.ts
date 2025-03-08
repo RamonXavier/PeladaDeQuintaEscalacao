@@ -14,6 +14,12 @@ import { GeracaoIndividualComponent } from './geracaoIndividual/geracaoIndividua
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ArtilhariaComponent } from './artilharia/artilharia.component';
 
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatListModule} from '@angular/material/list';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +41,12 @@ import { ArtilhariaComponent } from './artilharia/artilharia.component';
       preventDuplicates: true,
     }),
     NgSelectModule,
-    FormsModule
+    FormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [],
   exports: [],

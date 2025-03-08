@@ -1,3 +1,4 @@
+import { ArtilhariaApi } from './../shared/api/artilharia.api';
 import { Component } from '@angular/core';
 import { MenuConstant } from './menu/menu.constant';
 
@@ -17,7 +18,7 @@ export class AppComponent {
 
 
   constructor(){
-    this.menuEscolhido = this.menuSorteio;
+    this.menuEscolhido = this.menuArtilharia;
   }
 
   public alterarMenu(novoMenu: number):void{

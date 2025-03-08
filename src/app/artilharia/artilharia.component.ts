@@ -9,7 +9,7 @@ import { BuscarArtilhariaDto } from '../../shared/model/artilharia/buscarArtilha
 @Component({
   selector: 'app-artilharia',
   templateUrl: './artilharia.component.html',
-  styleUrls: ['./artilharia.component.css'],
+  styleUrls: ['./artilharia.component.scss'],
   standalone: false,
   encapsulation: ViewEncapsulation.None
 })
@@ -49,7 +49,7 @@ export class ArtilhariaComponent implements OnInit {
   }
 
   async salvar(): Promise<void> {
-    const divs = document.querySelectorAll('.testec.playerCard');
+    const divs = document.querySelectorAll('.testec');
 
     for (const div of Array.from(divs)) {
       const htmlElement = div as HTMLElement; // Cast explícito para HTMLElement
@@ -119,13 +119,41 @@ export class ArtilhariaComponent implements OnInit {
     });
   }
 
-  public getClassByIndex(index: number): string {
+  public getClassByIndex(index: number, idJogador: string): string {
+    let classeCss = '';
     if (index < 5) {
-      return 'nivel-bom';  // Verde
+      classeCss = 'nivel-bom';  // Verde
     } else if (index < 10) {
-      return 'nivel-moderado';  // Amarelo
+      classeCss = 'nivel-moderado';  // Amarelo
     } else {
-      return 'nivel-critico';  // Vermelho
+      classeCss = 'nivel-critico';  // Vermelho
     }
+
+    return classeCss;
+  }
+
+  public getAjusteImagem(idJogador: string):string {
+    let idJogadorParaAjustar: string[] = [
+      '4', //Rapahel rufino
+      '1', // flavim
+      '2', // colombo
+      '5', // junim
+      '15', // coroa
+      '6', // tiguim
+    ];
+
+    let idJogadorParaAjustarG2: string[] = [
+      '3', // caça rato
+      '13', // bebe leite
+    ];
+    let classeCss = '';
+
+    if(idJogadorParaAjustar.includes(idJogador.toString()))
+      classeCss += 'artilharia-ajusteImagem';
+
+    if(idJogadorParaAjustarG2.includes(idJogador.toString()))
+      classeCss += 'artilharia-ajusteImagem-g2';
+
+    return classeCss
   }
 }
