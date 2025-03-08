@@ -22,6 +22,7 @@ export class ArtilhariaComponent implements OnInit {
   public goleiros: JogadorDto[] = [];
   public imagemCardFifa: string = "https://i.ibb.co/3Nw177S/card-fifa.png";
   public imagemAvulso = 'https://i.ibb.co/DKgB6RP/cris.png';
+  public gerandoArtilharia: boolean = false;
 
   constructor (private toastr: ToastrService, private _jogadoresService: JogadoresService, private _artilharia: ArtilhariaService){
   }
@@ -49,6 +50,7 @@ export class ArtilhariaComponent implements OnInit {
   }
 
   async salvar(): Promise<void> {
+    this.gerandoArtilharia = true;
     const divs = document.querySelectorAll('.testec');
 
     for (const div of Array.from(divs)) {
@@ -63,8 +65,6 @@ export class ArtilhariaComponent implements OnInit {
       htmlElement.style.width = '1200px';
       htmlElement.style.maxWidth = 'none';
       htmlElement.style.transform = 'scale(1)';
-
-      await new Promise((resolve) => setTimeout(resolve, 200));
 
       // Captura a imagem com alta qualidade
       const canvas = await html2canvas(htmlElement, {
@@ -82,9 +82,9 @@ export class ArtilhariaComponent implements OnInit {
 
       const image = canvas.toDataURL('image/png', 1.0);
       this.downloadImage(image, `pontuaçãoDaSemana.png`);
+      this.gerandoArtilharia = false;
+      this.toastr.success('Imagem gerada com sucesso', '🚀Tudo certo!🚀');
     }
-
-    this.toastr.success('Imagem gerada com sucesso', '🚀Tudo certo!🚀');
   }
 
   public pontuarJogadores(novosJogadores: JogadorDto[]): void{
