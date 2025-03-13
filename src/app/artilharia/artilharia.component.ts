@@ -51,6 +51,7 @@ export class ArtilhariaComponent implements OnInit {
       this.artilhariaListagem = dados;
       this.artilhariaListagem.forEach(jogador => {
         jogador.imagemJogador = this.jogadores.find(x => x.id.toString() == jogador.idJogador)?.img;
+        jogador.jogador = this.jogadores.find(x => x.id.toString() == jogador.idJogador)?.nome;
         jogador.totalGols = jogador.janeiro + jogador.fevereiro + jogador.marco + jogador.abril + jogador.maio + jogador.junho + jogador.julho + jogador.agosto + jogador.setembro + jogador.outubro + jogador.novembro + jogador.dezembro;
       });
       this.artilhariaListagem.sort((a, b) => b.totalGols - a.totalGols);
@@ -162,7 +163,7 @@ export class ArtilhariaComponent implements OnInit {
 
   public getAjusteImagem(idJogador: string):string {
     let idJogadorParaAjustar: string[] = [
-      '4', //Rapahel rufino
+      //'4', //Rapahel rufino
       '1', // flavim
       '2', // colombo
       '5', // junim

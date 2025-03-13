@@ -44,10 +44,10 @@ export class JogadoresApi {
       },
       {
           "id": 4,
-          "nome": "RAPHAEL RUFINO",
+          "nome": "WANDERLEY",
           "nota": 7.8,
           "coroa": false,
-          "img": "https://i.ibb.co/HDz6f3GQ/Raphael-Rufino.png",
+          "img": "https://i.ibb.co/bjcpWp8D/wanderley2.png",
           "pote":"2",
           "pontuacao":"➖",
           "gols":"0"
@@ -220,9 +220,9 @@ export class JogadoresApi {
       },
       {
         "id": 20,
-        "nome": "WANDERLEY",
-        "nota": 8.0,
-        "img":"https://i.ibb.co/bjcpWp8D/wanderley2.png",
+        "nome": "RAPHAEL RUFINO",
+        "nota": 7.8,
+        "img":"https://i.ibb.co/HDz6f3GQ/Raphael-Rufino.png",
         "pontuacao":"➖",
         "gols":"0"
       }
@@ -231,3 +231,5 @@ export class JogadoresApi {
     return jogadoresAvulsos;
   }
 }
+
+//"https://i.ibb.co/HDz6f3GQ/Raphael-Rufino.png"
