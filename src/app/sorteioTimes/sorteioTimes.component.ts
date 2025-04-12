@@ -7,6 +7,7 @@ import { LogGeracaoTimeService } from '../../shared/service/logGeracaoTime.servi
 import { CriarLoggeracaoTimeDto } from '../../shared/model/criarLoggeracaoTimeDto.model';
 import { JogadoresService } from '../../shared/service/jogadores.service';
 import { CardsFifaService } from '../../shared/service/cardsFifa.service';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'sorteioTimes',
@@ -215,5 +216,35 @@ export class SorteioTimesComponent implements OnInit {
       default:
         return  '#a5a5a5'
     }
+  }
+
+  public soltarJogador(evento: CdkDragDrop<JogadorDto[]>) {
+    if (evento.previousContainer === evento.container) {
+      moveItemInArray(evento.container.data, evento.previousIndex, evento.currentIndex);
+    } else {
+      transferArrayItem(
+        evento.previousContainer.data,
+        evento.container.data,
+        evento.previousIndex,
+        evento.currentIndex
+      );
+
+      // Atualizar as notas dos times após a troca
+      this.atualizarNotasDosTimes();
+    }
+  }
+
+  private atualizarNotasDosTimes(): void {
+    this.times.forEach(time => {
+      time.nota = 0;
+      time.jogadores.forEach(jogador => {
+        time.nota += jogador.nota;
+      });
+    });
+  }
+
+  public obterListasConectadas(): string[] {
+    return this.times.map((_, index) => `time-${index}`)
+      .concat(this.times.map((_, index) => `time-mobile-${index}`));
   }
 }
