@@ -8,6 +8,7 @@ import { CriarLoggeracaoTimeDto } from '../../shared/model/criarLoggeracaoTimeDt
 import { JogadoresService } from '../../shared/service/jogadores.service';
 import { CardsFifaService } from '../../shared/service/cardsFifa.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { GeracaoTimeService } from '../../shared/service/geracaoTime.service';
 
 @Component({
   selector: 'sorteioTimes',
@@ -38,7 +39,8 @@ export class SorteioTimesComponent implements OnInit {
     private toastr: ToastrService,
     private _jogadoresService: JogadoresService,
     private _cardsFifaService: CardsFifaService,
-    private _logGeracaoTimeService: LogGeracaoTimeService){ }
+    private _logGeracaoTimeService: LogGeracaoTimeService,
+    private _geracaoTimeService: GeracaoTimeService){ }
 
 
   ngOnInit(): void {
@@ -246,5 +248,11 @@ export class SorteioTimesComponent implements OnInit {
   public obterListasConectadas(): string[] {
     return this.times.map((_, index) => `time-${index}`)
       .concat(this.times.map((_, index) => `time-mobile-${index}`));
+  }
+
+  public async salvarTimes(): Promise<void> {
+    this._geracaoTimeService.salvarTimes(this.times).then(resultado => {
+      this.toastr.success('Times salvos com sucesso!', '🚀Tudo certo!🚀');
+    });
   }
 }

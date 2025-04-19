@@ -16,6 +16,7 @@ export class MenuComponent implements OnInit {
   public menuPontuacao: number = MenuConstant.Pontuacao;
   public menuGerarIndividual: number = MenuConstant.GerarIndividual;
   public menuArtilharia: number = MenuConstant.Artilharia;
+  public menuJogar: number = MenuConstant.Jogar;
 
   constructor() { }
 

@@ -1,4 +1,3 @@
-import { ArtilhariaApi } from './../shared/api/artilharia.api';
 import { Component } from '@angular/core';
 import { MenuConstant } from './menu/menu.constant';
 
@@ -15,10 +14,10 @@ export class AppComponent {
   public menuPontuacao: number = MenuConstant.Pontuacao;
   public menuGerarIndividual: number = MenuConstant.GerarIndividual;
   public menuArtilharia: number = MenuConstant.Artilharia;
-
+  public menuJogar: number = MenuConstant.Jogar;
 
   constructor(){
-    this.menuEscolhido = this.menuArtilharia;
+    this.menuEscolhido = 4// this.menuArtilharia;
   }
 
   public alterarMenu(novoMenu: number):void{

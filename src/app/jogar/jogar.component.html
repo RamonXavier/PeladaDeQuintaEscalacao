@@ -1,0 +1,134 @@
+<div class="container">
+  <div class="text-center">
+    <h1>
+      Jogar <br> PELADA DE QUINTA
+    </h1>
+  </div>
+
+  <div class="col-12">
+    <div class="col-12 d-flex justify-content-center">
+      <img src="https://i.ibb.co/MfRZDpz/LOGO-PELADA.png" width="300" height="300">
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="col-12">
+    <div *ngIf="carregando" class="text-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Carregando...</span>
+      </div>
+    </div>
+
+    <div *ngIf="geracaoTime && !carregando && placar.length >1" class="row">
+      <!-- Placar -->
+      <div class="col-12 p-3">
+        <div class="placar-container">
+          <h3>Resultados</h3>
+          <div class="row">
+            <div *ngFor="let timePlacar of placar" class="col-4 p-1 text-center">
+              <div class="card placar-card p-1">
+                <div class="card-body p-0">
+                  <img [src]="timePlacar.imagem" class="emblema">
+                  <h4 [ngClass]="{'text-primary': timePlacar.id === 1, 'text-danger': timePlacar.id === 3}">
+                    Time {{timePlacar.id}}
+                  </h4>
+                  <div class="col-12">
+                    <div class="vitorias">
+                      <span class="label">Vitórias:</span>
+                      <span class="valor">{{timePlacar.vitorias}}</span>
+                    </div>
+                    <div class="derrotas">
+                      <span class="label">Derrotas:</span>
+                      <span class="valor">{{timePlacar.derrotas}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cronometro -->
+      <div class="col-12 text-center mb-4">
+        <div class="cronometro-container">
+          <h2 class="tempo-display" [ngClass]="{'tempo-acabando': tempoRestante <= 60}">
+            {{tempoFormatado}}
+          </h2>
+          <div class="botoes-cronometro">
+            <button class="btn btn-success btn-lg"
+                    (click)="comecarPelada()"
+                    [disabled]="cronometroAtivo">
+              Começar Pelada
+            </button>
+            <button class="btn btn-warning btn-lg"
+                    (click)="pausarRetomarCronometro()"
+                    [disabled]="!cronometroAtivo">
+              {{pausado ? 'Retomar' : 'Pausar'}}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal de seleção do time perdedor -->
+      <div *ngIf="mostrarSelecaoTimePerdedor" class="modal-selecao-time">
+        <div class="modal-content">
+          <h3>Selecione o time perdedor</h3>
+          <div *ngFor="let time of timesJogando;" class="botoes-selecao">
+            <button
+              *ngIf="placar[time.id!-1].ativo"
+              class="btn btn-danger" (click)="selecionarTimePerdedor(placar[time.id!-1].id)">
+              Time {{time.id}} Perdeu
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body p-0">
+            <h3>Jogando</h3>
+            <div class="col-12 row m-auto">
+              <div *ngFor="let time of timesJogando;" class="col-6 text-center">
+
+                <div *ngIf="placar[time.id!-1].ativo">
+                  <h1>
+                    {{placar[time.id!-1].gols}}
+                  </h1>
+                  <img [src]="placar[time.id!-1].imagem" class="emblema"><br>
+                </div>
+
+                <div *ngIf="placar[time.id!-1].ativo" class="card time-card" [ngClass]="{'time-azul' : time.id ==1, 'time-preto': time.id == 2, 'time-vermelho': time.id == 3}">
+                  <div class="card-body p-0 pt-1">
+                    <h3 class="card-title">{{time.id == 1 ? 'Azul' : time.id == 2 ? 'Preto' : 'Vermelho'}}</h3>
+                    <div *ngFor="let jogador of time.jogadores" class="jogador d-flex justify-content-center align-items-end" style="background-image: url({{jogador.img}});">
+                      <span>{{jogador.nome}}
+                        <hr style="margin-bottom: 3px; margin-top: -2px;color: white;">
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <hr>
+            <div *ngIf="timeDeFora">
+              <h3>Time de fora</h3>
+              <div class="col-12 p-3">
+                <div *ngIf="!placar[timeDeFora.id!-1].ativo" class="card time-card p-0" [ngClass]="{'time-azul' : timeDeFora.id ==1, 'time-preto': timeDeFora.id == 2, 'time-vermelho': timeDeFora.id == 3}">
+                  <div class="card-body p-0">
+                    <div *ngFor="let jogador of timeDeFora?.jogadores" class="jogador d-flex justify-content-center align-items-end" style="background-image: url({{jogador.img}});">
+                      <span>{{jogador.nome}}
+                        <hr style="margin-bottom: 3px; margin-top: -2px;color: white;">
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,7 @@ import { PontuacaoJogadoresComponent } from './pontuacaoJogadores/pontuacaoJogad
 import { GeracaoIndividualComponent } from './geracaoIndividual/geracaoIndividual.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ArtilhariaComponent } from './artilharia/artilharia.component';
+import { JogarComponent } from './jogar/jogar.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,12 +29,13 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MenuComponent,
     PontuacaoJogadoresComponent,
     GeracaoIndividualComponent,
-    ArtilhariaComponent
+    ArtilhariaComponent,
+    JogarComponent
    ],
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule,
+    RouterModule.forRoot([]),
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
