@@ -29,7 +29,7 @@ export class ArtilhariaComponent implements OnInit {
 
   public senhaDigitada: string = '';
   public senhaFelipe = "fleipe33";
-  public senhaRamon = "caça12";
+  public senhaRamon = "12ra";
   public senhaFlavin = "flavim11";
 
   constructor (private toastr: ToastrService, private _jogadoresService: JogadoresService, private _artilhariaService: ArtilhariaService){

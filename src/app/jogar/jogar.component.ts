@@ -35,7 +35,7 @@ export class JogarComponent implements OnInit {
   public jogadorSelecionado?: JogadorDto;
   private modalRef?: any;
   private historicoEstatisticas: BuscarEstatisticasPartidasDto[] = [];
-  private senhas = ["fleipe33", "caça12", "flavim11"];
+  private senhas = ["fleipe33", "12ra", "flavim11"];
   public senhaDigitada: string = '';
 
   constructor(
@@ -97,7 +97,7 @@ export class JogarComponent implements OnInit {
     if (this.cronometroAtivo) return;
 
     this.cronometroAtivo = true;
-    this.tempoRestante = 5//360;
+    this.tempoRestante = 360;
     this.atualizarTempoFormatado();
     this.diminuirTempoCronometro();
   }
