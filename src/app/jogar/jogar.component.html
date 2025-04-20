@@ -158,3 +158,29 @@
     </div>
   </div>
 </div>
+
+<!-- Modal de Validação de Senha -->
+<div class="modal fade" id="validarSenhaModal" tabindex="-1" aria-labelledby="validarSenhaModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="validarSenhaModalLabel">Validação de Senha</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="senha">Digite a senha para finalizar o jogo:</label>
+          <input type="password"
+                 class="form-control mt-2"
+                 id="senha"
+                 [(ngModel)]="senhaDigitada"
+                 placeholder="Digite a senha">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="validarSenhaEFinalizar()">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>

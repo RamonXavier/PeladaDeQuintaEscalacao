@@ -35,6 +35,8 @@ export class JogarComponent implements OnInit {
   public jogadorSelecionado?: JogadorDto;
   private modalRef?: any;
   private historicoEstatisticas: BuscarEstatisticasPartidasDto[] = [];
+  private senhas = ["fleipe33", "caça12", "flavim11"];
+  public senhaDigitada: string = '';
 
   constructor(
     private _geracaoTimeService: GeracaoTimeService,
@@ -275,8 +277,23 @@ export class JogarComponent implements OnInit {
   }
 
   public finalizarJogo(): void {
-    this._estatisticaPartidaService.atualizarFinal(this.historicoEstatisticas).then(() => {
-      this.toastr.success('Estatisticas atualizadas', '⚽');
-    })
+    // @ts-ignore
+    const modal = new bootstrap.Modal(document.getElementById('validarSenhaModal'));
+    modal.show();
+  }
+
+  public validarSenhaEFinalizar(): void {
+    if (this.senhas.includes(this.senhaDigitada)) {
+      this._estatisticaPartidaService.atualizarFinal(this.historicoEstatisticas).then(() => {
+        this.toastr.success('Estatísticas atualizadas', '⚽');
+      });
+      const modalElement = document.getElementById('validarSenhaModal');
+      // @ts-ignore
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      modal?.hide();
+      this.senhaDigitada = '';
+    } else {
+      this.toastr.error('Senha incorreta!', '🚫');
+    }
   }
 }
