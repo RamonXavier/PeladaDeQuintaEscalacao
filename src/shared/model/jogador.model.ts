@@ -5,4 +5,5 @@ export interface Jogador {
   nivel?: number;
   cor: 'azul' | 'preto' | 'vermelho';
   ativo?: boolean;
+  gols?: number;
 }

@@ -6,6 +6,7 @@ import { Jogador } from '../../shared/model/jogador.model';
 import { ConfiguracaoTimeService } from '../../shared/service/configuracaoTime.service';
 import { PlacarTimesDto } from '../../shared/model/configuracaoTimes/placarTimesDto.model';
 import { TimeDto } from '../../shared/model/timeDto.model';
+import { JogadorDto } from '../../shared/model/jogadorDto.model';
 
 @Component({
   selector: 'app-jogar',
@@ -27,6 +28,8 @@ export class JogarComponent implements OnInit {
   public timesFora: Jogador[][] = [];
   public pausado: boolean = false;
   public placar: PlacarTimesDto[] = [];
+  public primeiraPartida: boolean = true;
+  public timeQueAcabouDeEntrar?: TimeDto;
 
   constructor(
     private _geracaoTimeService: GeracaoTimeService,
@@ -95,14 +98,15 @@ export class JogarComponent implements OnInit {
 
       if (this.tempoRestante <= 0) {
         this.pararCronometro();
-        this.mostrarSelecaoTimePerdedor = true;
-        this.toastr.info('Selecione qual time perdeu para substituição', '⏰');
+        this.finalizarPartida();
       }
+
     }, 1000);
   }
 
   public pausarRetomarCronometro(): void {
-    if (!this.cronometroAtivo) return;
+    if (!this.cronometroAtivo)
+      return;
 
     this.pausado = !this.pausado;
     if (this.pausado) {
@@ -124,8 +128,9 @@ export class JogarComponent implements OnInit {
   }
 
   public selecionarTimePerdedor(timePerdedor: number): void {
+    //this.timeQueAcabouDeEntrar = this.timesJogando.find(time => time.id !== timeQueJaEstavaJogando.id);
+    this.timeQueAcabouDeEntrar = this.timeDeFora;
     this.placar.forEach(timeMontado => {
-
       if(timeMontado.id == timePerdedor)
         timeMontado.derrotas++;
 
@@ -153,5 +158,59 @@ export class JogarComponent implements OnInit {
   public getTimesParaJogo(): any[] {
     if (!this.geracaoTime) return [];
     return this.geracaoTime.times.slice(0, 2);
+  }
+
+  public incrementarGol(jogador: JogadorDto): void {
+
+    if (!this.cronometroAtivo)
+      return;
+
+    if (confirm(`Deseja confirmar o gol de ${jogador.nome}?`)) {
+      jogador.gols = ((parseInt(jogador.gols as string) || 0) + 1).toString();
+      const time = this.timesJogando.find(t => t.jogadores.some(j => j.id === jogador.id));
+      if (time) {
+        const placarTime = this.placar.find(p => p.id === time.id);
+        if (placarTime) {
+          placarTime.gols++;
+        }
+      }
+    }
+  }
+
+  public comecarNovaPartida(): void {
+    this.placar.forEach(time => time.gols = 0);
+    this.primeiraPartida = false;
+    this.comecarPelada();
+  }
+
+  public tratarResultados(): void {
+    let timePerdedor;
+    const golsTime1 = this.placar.find(p => p.id === this.timesJogando[0].id)?.gols || 0;
+    const golsTime2 = this.placar.find(p => p.id === this.timesJogando[1].id)?.gols || 0;
+
+    if (golsTime1 === golsTime2 && this.primeiraPartida)
+      this.mostrarSelecaoTimePerdedor = true;
+    else if (golsTime1 === golsTime2 && !this.primeiraPartida){
+      const timeQueJaEstavaJogando = this.timesJogando.find(time => time.id !== this.timeQueAcabouDeEntrar?.id)!;
+      this.selecionarTimePerdedor(timeQueJaEstavaJogando.id!);
+    }
+    else if (golsTime1 !== golsTime2) {
+      timePerdedor = golsTime1 < golsTime2
+      ? this.timesJogando[0]
+      : this.timesJogando[1];
+      this.selecionarTimePerdedor(timePerdedor.id!);
+    }
+  }
+
+  public finalizarPartida(): void {
+    this.tratarResultados();
+    this.zerarGolsDosTimesNoFinalDaPartida();
+    this.primeiraPartida = false;
+  }
+
+  private zerarGolsDosTimesNoFinalDaPartida(): void {
+    this.placar.forEach(timePlacar => {
+      timePlacar.gols = 0;
+    });
   }
 }
