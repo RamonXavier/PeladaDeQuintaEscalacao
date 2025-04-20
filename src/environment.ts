@@ -5,4 +5,5 @@ export const environment = {
   base_url_GeracaoTime: 'https://apigenerator.dronahq.com/api/OxfVC_Uu/geracaoTimes/',
   base_url_ConfiguracaoTime: 'https://apigenerator.dronahq.com/api/PFNfy7tE/configuracaoTime/',
   base_url_artilharia: 'https://apigenerator.dronahq.com/api/Opq0FhaS/artilharia',
+  base_url_estatisticasPartidas: 'https://apigenerator.dronahq.com/api/CIH-T9Xw/estatisticasPartidas',
 };

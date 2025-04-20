@@ -7,6 +7,8 @@ import { ConfiguracaoTimeService } from '../../shared/service/configuracaoTime.s
 import { PlacarTimesDto } from '../../shared/model/configuracaoTimes/placarTimesDto.model';
 import { TimeDto } from '../../shared/model/timeDto.model';
 import { JogadorDto } from '../../shared/model/jogadorDto.model';
+import { BuscarEstatisticasPartidasDto } from '../../shared/model/estatisticasPartidas/buscarEstatisticasPartidasDto.model';
+import { EstatisticaPartidaService } from '../../shared/service/estatisticaPartida.service';
 
 @Component({
   selector: 'app-jogar',
@@ -32,11 +34,13 @@ export class JogarComponent implements OnInit {
   public timeQueAcabouDeEntrar?: TimeDto;
   public jogadorSelecionado?: JogadorDto;
   private modalRef?: any;
+  private historicoEstatisticas: BuscarEstatisticasPartidasDto[] = [];
 
   constructor(
     private _geracaoTimeService: GeracaoTimeService,
     private toastr: ToastrService,
-    private _configuracaoTimeService: ConfiguracaoTimeService
+    private _configuracaoTimeService: ConfiguracaoTimeService,
+    private _estatisticaPartidaService: EstatisticaPartidaService
   ) { }
 
   ngOnInit(): void {
@@ -58,7 +62,7 @@ export class JogarComponent implements OnInit {
       });
   }
 
-  private definirTimesAtivosEInativos() {
+  private definirTimesAtivosEInativos(): void {
     let idTimeDeFora = this.placar.find(x=>!x.ativo)?.id;
     this.timeDeFora = this.geracaoTime?.times.find(x=>x.id == idTimeDeFora);
 
@@ -96,7 +100,7 @@ export class JogarComponent implements OnInit {
     this.diminuirTempoCronometro();
   }
 
-  private diminuirTempoCronometro() {
+  private diminuirTempoCronometro(): void {
     this.intervalo = setInterval(() => {
       this.tempoRestante--;
       this.atualizarTempoFormatado();
@@ -150,7 +154,7 @@ export class JogarComponent implements OnInit {
     this.tempoFormatado = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
   }
 
-  public getTimesParaJogo(): any[] {
+  public getTimesParaJogo(): TimeDto[] {
     if (!this.geracaoTime) return [];
     return this.geracaoTime.times.slice(0, 2);
   }
@@ -219,14 +223,60 @@ export class JogarComponent implements OnInit {
   }
 
   public finalizarPartida(): void {
+    this.registrarEstatisticasPartida();
     this.tratarResultados();
     this.zerarGolsDosTimesNoFinalDaPartida();
     this.primeiraPartida = false;
+  }
+
+  private registrarEstatisticasPartida(): void {
+    const estatisticas: BuscarEstatisticasPartidasDto = {
+      data: new Date().toLocaleString('pt-BR', {
+        timeZone: 'America/Sao_Paulo',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      }),
+      placar: this.placar.map(time => ({
+        id: time.id,
+        nome: `Time ${time.id}`,
+        gols: time.gols,
+        vitorias: time.vitorias,
+        derrotas: time.derrotas
+      })),
+      jogadores: this.geracaoTime?.times.flatMap(time =>
+        time.jogadores.map(jogador => ({
+          id: jogador.id,
+          nome: jogador.nome,
+          time: time.id,
+          gols: parseInt(jogador.gols as string) || 0
+        }))
+      ).filter(jogador => jogador.gols > 0)
+    };
+
+    this.historicoEstatisticas.push(estatisticas);
+
+    console.log(this.historicoEstatisticas);
+    console.log(estatisticas);
+
+
+
+    this._estatisticaPartidaService.atualizar(estatisticas).then(() => {
+      this.toastr.success('Estatisticas atualizadas', '⚽');
+    })
   }
 
   private zerarGolsDosTimesNoFinalDaPartida(): void {
     this.placar.forEach(timePlacar => {
       timePlacar.gols = 0;
     });
+  }
+
+  public finalizarJogo(): void {
+    this._estatisticaPartidaService.atualizarFinal(this.historicoEstatisticas).then(() => {
+      this.toastr.success('Estatisticas atualizadas', '⚽');
+    })
   }
 }
