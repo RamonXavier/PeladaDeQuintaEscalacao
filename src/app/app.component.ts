@@ -17,7 +17,7 @@ export class AppComponent {
   public menuJogar: number = MenuConstant.Jogar;
 
   constructor(){
-    this.menuEscolhido = 4// this.menuArtilharia;
+    this.menuEscolhido = this.menuArtilharia;
   }
 
   public alterarMenu(novoMenu: number):void{
