@@ -30,6 +30,8 @@ export class JogarComponent implements OnInit {
   public placar: PlacarTimesDto[] = [];
   public primeiraPartida: boolean = true;
   public timeQueAcabouDeEntrar?: TimeDto;
+  public jogadorSelecionado?: JogadorDto;
+  private modalRef?: any;
 
   constructor(
     private _geracaoTimeService: GeracaoTimeService,
@@ -91,7 +93,10 @@ export class JogarComponent implements OnInit {
     this.cronometroAtivo = true;
     this.tempoRestante = 5//360;
     this.atualizarTempoFormatado();
+    this.diminuirTempoCronometro();
+  }
 
+  private diminuirTempoCronometro() {
     this.intervalo = setInterval(() => {
       this.tempoRestante--;
       this.atualizarTempoFormatado();
@@ -113,22 +118,12 @@ export class JogarComponent implements OnInit {
       clearInterval(this.intervalo);
       this.toastr.info('Cronômetro pausado', '⏸️');
     } else {
-      this.intervalo = setInterval(() => {
-        this.tempoRestante--;
-        this.atualizarTempoFormatado();
-
-        if (this.tempoRestante <= 0) {
-          this.pararCronometro();
-          this.mostrarSelecaoTimePerdedor = true;
-          this.toastr.info('Selecione qual time perdeu para substituição', '⏰');
-        }
-      }, 1000);
+      this.diminuirTempoCronometro();
       this.toastr.success('Cronômetro retomado', '▶️');
     }
   }
 
   public selecionarTimePerdedor(timePerdedor: number): void {
-    //this.timeQueAcabouDeEntrar = this.timesJogando.find(time => time.id !== timeQueJaEstavaJogando.id);
     this.timeQueAcabouDeEntrar = this.timeDeFora;
     this.placar.forEach(timeMontado => {
       if(timeMontado.id == timePerdedor)
@@ -161,13 +156,33 @@ export class JogarComponent implements OnInit {
   }
 
   public incrementarGol(jogador: JogadorDto): void {
-
     if (!this.cronometroAtivo)
       return;
 
-    if (confirm(`Deseja confirmar o gol de ${jogador.nome}?`)) {
-      jogador.gols = ((parseInt(jogador.gols as string) || 0) + 1).toString();
-      const time = this.timesJogando.find(t => t.jogadores.some(j => j.id === jogador.id));
+    this.jogadorSelecionado = jogador;
+    // @ts-ignore
+    const modal = new bootstrap.Modal(document.getElementById('confirmarGolModal'));
+    this.modalRef = modal;
+
+    const cronometroEstadoAnterior = this.pausado;
+    if (!this.pausado) {
+      this.pausarRetomarCronometro();
+    }
+    const modalElement = document.getElementById('confirmarGolModal');
+    modalElement?.addEventListener('hidden.bs.modal', () => {
+      if (!cronometroEstadoAnterior && this.pausado) {
+        this.pausarRetomarCronometro();
+      }
+      this.jogadorSelecionado = undefined;
+    });
+
+    modal.show();
+  }
+
+  public confirmarGol(): void {
+    if (this.jogadorSelecionado) {
+      this.jogadorSelecionado.gols = ((parseInt(this.jogadorSelecionado.gols as string) || 0) + 1).toString();
+      const time = this.timesJogando.find(t => t.jogadores.some(j => j.id === this.jogadorSelecionado?.id));
       if (time) {
         const placarTime = this.placar.find(p => p.id === time.id);
         if (placarTime) {
@@ -175,6 +190,7 @@ export class JogarComponent implements OnInit {
         }
       }
     }
+    this.modalRef?.hide();
   }
 
   public comecarNovaPartida(): void {
