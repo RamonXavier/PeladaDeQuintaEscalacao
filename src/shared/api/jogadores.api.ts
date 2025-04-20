@@ -42,26 +42,26 @@ export class JogadoresApi {
           "pontuacao":"➖",
           "gols":"0"
       },
-      {
-          "id": 4,
-          "nome": "WANDERLEY",
-          "nota": 7.8,
-          "coroa": false,
-          "img": "https://i.ibb.co/bjcpWp8D/wanderley2.png",
-          "pote":"2",
-          "pontuacao":"➖",
-          "gols":"0"
-      },
       // {
       //     "id": 4,
-      //     "nome": "MARKIM",
-      //     "nota": 8.8,
+      //     "nome": "WANDERLEY",
+      //     "nota": 7.8,
       //     "coroa": false,
-      //     "img":"https://i.ibb.co/8zRvvVR/Markim.png",
+      //     "img": "https://i.ibb.co/bjcpWp8D/wanderley2.png",
       //     "pote":"2",
       //     "pontuacao":"➖",
       //     "gols":"0"
       // },
+      {
+          "id": 4,
+          "nome": "MARKIM",
+          "nota": 8.8,
+          "coroa": false,
+          "img":"https://i.ibb.co/8zRvvVR/Markim.png",
+          "pote":"2",
+          "pontuacao":"➖",
+          "gols":"0"
+      },
       {
           "id": 5,
           "nome": "JUNIN",
