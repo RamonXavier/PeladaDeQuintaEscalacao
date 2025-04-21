@@ -1,5 +1,5 @@
 import { PlacarTimesDto } from '../configuracaoTimes/placarTimesDto.model';
-import { JogadorEstatisticaDto } from '../jogador/JogadorEstatisticaDto.model';
+import { JogadorEstatisticaDto } from '../jogador/jogadorEstatisticaDto.model';
 
 export class BuscarEstatisticasPartidasDto {
     id?: number;

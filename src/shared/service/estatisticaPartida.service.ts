@@ -1,7 +1,6 @@
 import { EstatisticasPartidasApi } from './../api/estatisticasPartidas.api';
 import { ToastrService } from "ngx-toastr";
 import { Injectable } from "@angular/core";
-import { ArtilhariaJsonDto } from "../model/artilharia/artilhariaJsonDto.model";
 import { BuscarEstatisticasPartidasDto } from '../model/estatisticasPartidas/buscarEstatisticasPartidasDto.model';
 
 @Injectable({
@@ -15,9 +14,9 @@ export class EstatisticaPartidaService {
     private _toastService: ToastrService
   ) { }
 
-  public buscarTodos(): Promise<ArtilhariaJsonDto> {
+  public buscarTodos(): Promise<BuscarEstatisticasPartidasDto[]> {
     return new Promise((resolve, reject) => {
-      this._estatisticaPartidaApi.buscar().subscribe((retorno: ArtilhariaJsonDto) => {
+      this._estatisticaPartidaApi.buscar().subscribe((retorno: BuscarEstatisticasPartidasDto[]) => {
         resolve(retorno);
       }, erro => {
         this._toastService.error('', 'Houve uma falha ao buscar as estatisticas de partidas.', { toastClass: 'toast ngx-toastr', closeButton: true });

@@ -34,7 +34,8 @@ export class JogarComponent implements OnInit {
   public timeQueAcabouDeEntrar?: TimeDto;
   public jogadorSelecionado?: JogadorDto;
   private modalRef?: any;
-  private historicoEstatisticas: BuscarEstatisticasPartidasDto[] = [];
+  public historicoEstatisticas: BuscarEstatisticasPartidasDto[] = [];
+  public historicoEstatisticasSalvas: any[] = [];
   private senhas = ["fleipe33", "12ra", "flavim11"];
   public senhaDigitada: string = '';
 
@@ -47,6 +48,13 @@ export class JogarComponent implements OnInit {
 
   ngOnInit(): void {
     this.configurarCarregamentoDeTimes();
+    //this.carregarHistoricosEstatisticas();
+  }
+
+  private carregarHistoricosEstatisticas() {
+    this._estatisticaPartidaService.buscarTodos().then((resultado) => {
+      this.historicoEstatisticasSalvas = resultado;
+    });
   }
 
   private async configurarCarregamentoDeTimes(): Promise<void> {
@@ -260,7 +268,8 @@ export class JogarComponent implements OnInit {
         nome: `Time ${time.id}`,
         gols: time.gols,
         vitorias: time.vitorias,
-        derrotas: time.derrotas
+        derrotas: time.derrotas,
+        ativo: time.ativo
       })),
       jogadores: this.geracaoTime?.times.flatMap(time =>
         time.jogadores.map(jogador => ({
@@ -275,6 +284,7 @@ export class JogarComponent implements OnInit {
     this.historicoEstatisticas.push(estatisticas);
     this._estatisticaPartidaService.atualizar(this.historicoEstatisticas).then(() => {
       this.toastr.success('Estatisticas atualizadas', '⚽');
+      //this.carregarHistoricosEstatisticas();
     })
   }
 

@@ -12,8 +12,8 @@ export class EstatisticasPartidasApi {
   constructor(private http: HttpClient) {
   }
 
-  public buscar(): Observable<BuscarEstatisticasPartidasDto> {
-    return this.http.get<BuscarEstatisticasPartidasDto>(environment.base_url_estatisticasPartidas+'/1');
+  public buscar(): Observable<BuscarEstatisticasPartidasDto[]> {
+    return this.http.get<BuscarEstatisticasPartidasDto[]>(environment.base_url_estatisticasPartidas+'/1');
   }
 
   public atualizar(estatistica: BuscarEstatisticasPartidasDto[]): Observable<void> {
