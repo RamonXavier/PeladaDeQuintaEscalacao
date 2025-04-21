@@ -105,7 +105,7 @@ export class JogarComponent implements OnInit {
     if (this.cronometroAtivo) return;
 
     this.cronometroAtivo = true;
-    this.tempoRestante = 5//360;
+    this.tempoRestante = 360;
     this.atualizarTempoFormatado();
     this.diminuirTempoCronometro();
   }
