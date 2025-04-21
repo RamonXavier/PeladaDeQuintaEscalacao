@@ -230,8 +230,6 @@ export class SorteioTimesComponent implements OnInit {
         evento.previousIndex,
         evento.currentIndex
       );
-
-      // Atualizar as notas dos times após a troca
       this.atualizarNotasDosTimes();
     }
   }
@@ -251,7 +249,7 @@ export class SorteioTimesComponent implements OnInit {
   }
 
   public async salvarTimes(): Promise<void> {
-    this._geracaoTimeService.salvarTimes(this.times).then(resultado => {
+    this._geracaoTimeService.atualizarTimesGerados(this.times).then(resultado => {
       this.toastr.success('Times salvos com sucesso!', '🚀Tudo certo!🚀');
     });
   }

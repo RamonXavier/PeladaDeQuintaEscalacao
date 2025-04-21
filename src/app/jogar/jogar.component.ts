@@ -199,6 +199,20 @@ export class JogarComponent implements OnInit {
     this.modalRef?.hide();
   }
 
+  public removerGol(): void {
+    if (this.jogadorSelecionado && parseInt(this.jogadorSelecionado!.gols!) > 0) {
+      this.jogadorSelecionado.gols = ((parseInt(this.jogadorSelecionado.gols as string) || 0) - 1).toString();
+      const time = this.timesJogando.find(t => t.jogadores.some(j => j.id === this.jogadorSelecionado?.id));
+      if (time) {
+        const placarTime = this.placar.find(p => p.id === time.id);
+        if (placarTime && placarTime.gols >0) {
+          placarTime.gols--;
+        }
+      }
+    }
+    this.modalRef?.hide();
+  }
+
   public comecarNovaPartida(): void {
     this.placar.forEach(time => time.gols = 0);
     this.primeiraPartida = false;

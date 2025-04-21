@@ -10,10 +10,10 @@ import { ToastrService } from 'ngx-toastr';
 export class GeracaoTimeService {
     constructor(private _geracaoTimesApi: GeracaoTimesApi, private toastr: ToastrService) { }
 
-    public salvarTimes(times: TimeDto[]): Promise<any> {
+    public atualizarTimesGerados(times: TimeDto[]): Promise<any> {
       const geracaoTime = new GeracaoTimeDto(new Date(), times);
       return new Promise((resolve, reject) => {
-        this._geracaoTimesApi.salvarTimesGerados(geracaoTime).subscribe(data => {
+        this._geracaoTimesApi.atualizarTimesGerados(geracaoTime).subscribe(data => {
             resolve(data);
         }, error => {
             reject(error);

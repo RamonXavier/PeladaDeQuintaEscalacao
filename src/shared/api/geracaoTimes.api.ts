@@ -16,6 +16,10 @@ export class GeracaoTimesApi {
     return this.http.post<void>(environment.base_url_GeracaoTime, geracaoTime);
   }
 
+  public atualizarTimesGerados(geracaoTime: GeracaoTimeDto): Observable<void> {
+    return this.http.put<void>(environment.base_url_GeracaoTime+'1', geracaoTime);
+  }
+
   public buscarTimesGerados(): Observable<GeracaoTimeDto> {
     return this.http.get<GeracaoTimeDto>(environment.base_url_GeracaoTime+'1');
   }
