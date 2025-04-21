@@ -26,7 +26,7 @@ export class EstatisticaPartidaService {
     });
   }
 
-  public atualizar(estatistica: BuscarEstatisticasPartidasDto): Promise<void> {
+  public atualizar(estatistica: BuscarEstatisticasPartidasDto[]): Promise<void> {
     return new Promise((resolve, reject) => {
       this._estatisticaPartidaApi.atualizar(estatistica).subscribe((retorno: void) => {
         resolve();

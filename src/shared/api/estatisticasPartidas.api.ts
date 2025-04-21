@@ -16,7 +16,7 @@ export class EstatisticasPartidasApi {
     return this.http.get<BuscarEstatisticasPartidasDto>(environment.base_url_estatisticasPartidas+'/1');
   }
 
-  public atualizar(estatistica: BuscarEstatisticasPartidasDto): Observable<void> {
+  public atualizar(estatistica: BuscarEstatisticasPartidasDto[]): Observable<void> {
     return this.http.put<void>(environment.base_url_estatisticasPartidas+'/1', estatistica);
   }
 

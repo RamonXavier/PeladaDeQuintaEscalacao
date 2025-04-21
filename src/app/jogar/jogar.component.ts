@@ -97,7 +97,7 @@ export class JogarComponent implements OnInit {
     if (this.cronometroAtivo) return;
 
     this.cronometroAtivo = true;
-    this.tempoRestante = 360;
+    this.tempoRestante = 5//360;
     this.atualizarTempoFormatado();
     this.diminuirTempoCronometro();
   }
@@ -273,13 +273,7 @@ export class JogarComponent implements OnInit {
     };
 
     this.historicoEstatisticas.push(estatisticas);
-
-    console.log(this.historicoEstatisticas);
-    console.log(estatisticas);
-
-
-
-    this._estatisticaPartidaService.atualizar(estatisticas).then(() => {
+    this._estatisticaPartidaService.atualizar(this.historicoEstatisticas).then(() => {
       this.toastr.success('Estatisticas atualizadas', '⚽');
     })
   }
