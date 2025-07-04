@@ -6,6 +6,8 @@ import { JogadorDto } from '../../shared/model/jogadorDto.model';
 import { ArtilhariaService } from '../../shared/service/artilharia.service';
 import { BuscarArtilhariaDto } from '../../shared/model/artilharia/buscarArtilhariaDto.model';
 import { AtualizacaoArtilhariaJsonDto } from '../../shared/model/artilharia/atualizacaoArtilhariaJsonDto.model';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-artilharia',
@@ -32,8 +34,13 @@ export class ArtilhariaComponent implements OnInit {
   public senhaRamon = "12ra";
   public senhaFlavin = "flavim11";
 
-  constructor (private toastr: ToastrService, private _jogadoresService: JogadoresService, private _artilhariaService: ArtilhariaService){
-  }
+  constructor (
+    private toastr: ToastrService,
+    private _jogadoresService: JogadoresService,
+    private _artilhariaService: ArtilhariaService,
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef
+  ){}
 
 
   ngOnInit(): void {
@@ -41,10 +48,10 @@ export class ArtilhariaComponent implements OnInit {
     this.tratarCarregamentoArtilharia();
   }
 
-  private tratarCarregamentoArtilharia() {
+  private async tratarCarregamentoArtilharia(enviarWebhook: boolean = false) {
     this.atualizandoArtilharia = true;
 
-    this._artilhariaService.buscarTodos().then(retorno => {
+    await this._artilhariaService.buscarTodos().then(async retorno => {
       let dados = JSON.parse(retorno.artilhariaJson!);
       this.datasDeAtualizacao = JSON.parse(retorno.dataAtualizacao!);
 
@@ -56,6 +63,13 @@ export class ArtilhariaComponent implements OnInit {
       });
       this.artilhariaListagem.sort((a, b) => b.totalGols - a.totalGols);
       this.atualizandoArtilharia = false;
+
+      if(enviarWebhook) {
+        this.cdr.detectChanges();
+        setTimeout(() => {
+          this.gerarEEnviarImagemParaWebhook();
+        }, 100);
+      }
     });
   }
 
@@ -100,6 +114,7 @@ export class ArtilhariaComponent implements OnInit {
 
       const image = canvas.toDataURL('image/png', 1.0);
       this.downloadImage(image, `pontuaçãoDaSemana.png`);
+      // Removido envio para webhook daqui
       this.gerandoArtilharia = false;
       this.toastr.success('Imagem gerada com sucesso', '🚀Tudo certo!🚀');
     }
@@ -112,7 +127,7 @@ export class ArtilhariaComponent implements OnInit {
       this.artilhariaListagem = novaArtilharia;
       this.toastr.success('Os jogadores foram pontuados', '🚀Tudo certo!🚀');
       this._artilhariaService.pontuarJogadores(this.artilhariaListagem, this.datasDeAtualizacao, senha).finally(() => {
-        this.tratarCarregamentoArtilharia();
+        this.tratarCarregamentoArtilharia(true);
       });
 
       this.jaGerouNota = true;
@@ -127,6 +142,61 @@ export class ArtilhariaComponent implements OnInit {
     link.href = dataUrl;
     link.download = filename;
     link.click();
+  }
+
+  private async enviarImagemParaWebhook(canvas: HTMLCanvasElement): Promise<void> {
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(blob => {
+        if (!blob) {
+          this.toastr.error('Erro ao gerar imagem para envio', 'Erro');
+          reject();
+          return;
+        }
+        const formData = new FormData();
+        formData.append('file', blob, 'escalao.png');
+        this.http.post('http://34.44.29.245:5678/webhook-test/dfcbb998-bb04-4165-b4c6-c86bd6bcd005', formData)
+          .subscribe({
+            next: () => {
+              this.toastr.success('Imagem enviada para o webhook!', 'Webhook');
+              resolve();
+            },
+            error: () => {
+              this.toastr.error('Erro ao enviar imagem para o webhook', 'Erro');
+              reject();
+            }
+          });
+      }, 'image/png');
+    });
+  }
+
+  private async gerarEEnviarImagemParaWebhook(): Promise<void> {
+    // Função semelhante ao salvar, mas só envia para o webhook
+    const divs = document.querySelectorAll('.testec');
+    for (const div of Array.from(divs)) {
+      const htmlElement = div as HTMLElement;
+      // Salvar estilos originais
+      const originalWidth = htmlElement.style.width;
+      const originalMaxWidth = htmlElement.style.maxWidth;
+      const originalTransform = htmlElement.style.transform;
+      // Ajuste temporário para capturar a imagem corretamente
+      htmlElement.style.width = '1200px';
+      htmlElement.style.maxWidth = 'none';
+      htmlElement.style.transform = 'scale(1)';
+      // Captura a imagem com alta qualidade
+      const canvas = await html2canvas(htmlElement, {
+        scale: 3,
+        useCORS: true,
+        backgroundColor: null,
+        windowWidth: 1200,
+        windowHeight: htmlElement.scrollHeight,
+      });
+      // Restaurar estilos originais após a captura
+      htmlElement.style.width = originalWidth;
+      htmlElement.style.maxWidth = originalMaxWidth;
+      htmlElement.style.transform = originalTransform;
+      // Enviar para webhook n8n
+      await this.enviarImagemParaWebhook(canvas);
+    }
   }
 
   public alterarImagemJogador(id: number): void{
