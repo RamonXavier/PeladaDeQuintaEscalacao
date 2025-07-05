@@ -98,13 +98,15 @@ export class ArtilhariaComponent implements OnInit {
       htmlElement.style.maxWidth = 'none';
       htmlElement.style.transform = 'scale(1)';
 
-      // Captura a imagem com alta qualidade
+      // Captura a imagem com qualidade otimizada
       const canvas = await html2canvas(htmlElement, {
-        scale: 3,
+        scale: 1.5,
         useCORS: true,
         backgroundColor: null,
         windowWidth: 1200,
         windowHeight: htmlElement.scrollHeight,
+        imageTimeout: 0,
+        logging: false
       });
 
       // Restaurar estilos originais após a captura
@@ -112,7 +114,7 @@ export class ArtilhariaComponent implements OnInit {
       htmlElement.style.maxWidth = originalMaxWidth;
       htmlElement.style.transform = originalTransform;
 
-      const image = canvas.toDataURL('image/png', 1.0);
+      const image = canvas.toDataURL('image/jpeg', 0.8);
       this.downloadImage(image, `pontuaçãoDaSemana.png`);
       // Removido envio para webhook daqui
       this.gerandoArtilharia = false;
@@ -154,7 +156,7 @@ export class ArtilhariaComponent implements OnInit {
         }
         const formData = new FormData();
         formData.append('file', blob, 'escalao.png');
-        this.http.post('http://34.44.29.245:5678/webhook-test/dfcbb998-bb04-4165-b4c6-c86bd6bcd005', formData)
+        this.http.post('https://meuzumcarfree01.duckdns.org/webhook/dfcbb998-bb04-4165-b4c6-c86bd6bcd005', formData)
           .subscribe({
             next: () => {
               this.toastr.success('Imagem enviada para o webhook!', 'Webhook');
@@ -182,20 +184,20 @@ export class ArtilhariaComponent implements OnInit {
       htmlElement.style.width = '1200px';
       htmlElement.style.maxWidth = 'none';
       htmlElement.style.transform = 'scale(1)';
-      // Captura a imagem com alta qualidade
+      // Captura a imagem com qualidade otimizada
       const canvas = await html2canvas(htmlElement, {
-        scale: 3,
+        scale: 1.5,
         useCORS: true,
         backgroundColor: null,
         windowWidth: 1200,
         windowHeight: htmlElement.scrollHeight,
+        imageTimeout: 0,
+        logging: false
       });
       // Restaurar estilos originais após a captura
       htmlElement.style.width = originalWidth;
       htmlElement.style.maxWidth = originalMaxWidth;
       htmlElement.style.transform = originalTransform;
-      // Enviar para webhook n8n
-      await this.enviarImagemParaWebhook(canvas);
     }
   }
 
