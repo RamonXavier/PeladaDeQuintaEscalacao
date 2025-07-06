@@ -156,7 +156,7 @@ export class ArtilhariaComponent implements OnInit {
         }
         const formData = new FormData();
         formData.append('file', blob, 'escalao.png');
-        this.http.post('https://meuzumcarfree01.duckdns.org/webhook-test/1b8eb739-a0de-44e4-a329-ba80b3407d63', formData)
+        this.http.post('https://meuzumcarfree01.duckdns.org/webhook/1b8eb739-a0de-44e4-a329-ba80b3407d63', formData)
           .subscribe({
             next: () => {
               this.toastr.success('Imagem enviada para o webhook!', 'Webhook');
