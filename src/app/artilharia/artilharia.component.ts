@@ -156,7 +156,7 @@ export class ArtilhariaComponent implements OnInit {
         }
         const formData = new FormData();
         formData.append('file', blob, 'escalao.png');
-        this.http.post('https://meuzumcarfree01.duckdns.org/webhook/dfcbb998-bb04-4165-b4c6-c86bd6bcd005', formData)
+        this.http.post('https://meuzumcarfree01.duckdns.org/webhook-test/1b8eb739-a0de-44e4-a329-ba80b3407d63', formData)
           .subscribe({
             next: () => {
               this.toastr.success('Imagem enviada para o webhook!', 'Webhook');
@@ -198,6 +198,13 @@ export class ArtilhariaComponent implements OnInit {
       htmlElement.style.width = originalWidth;
       htmlElement.style.maxWidth = originalMaxWidth;
       htmlElement.style.transform = originalTransform;
+
+
+      //const image = canvas.toDataURL('image/jpeg', 0.8);
+      //this.downloadImage(image, `pontuaçãoDaSemana.png`);
+      // Enviar para webhook n8n
+      await this.enviarImagemParaWebhook(canvas);
+
     }
   }
 
