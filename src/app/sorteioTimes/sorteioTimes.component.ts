@@ -9,6 +9,8 @@ import { JogadoresService } from '../../shared/service/jogadores.service';
 import { CardsFifaService } from '../../shared/service/cardsFifa.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { GeracaoTimeService } from '../../shared/service/geracaoTime.service';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'sorteioTimes',
@@ -34,13 +36,17 @@ export class SorteioTimesComponent implements OnInit {
   ];
   public cardsFifa: string[] = [];
   public erroQuantidadeJogadoresEmPotes: boolean = false;
+  public enviandoImagemWebhook: boolean = false;
 
   constructor (
     private toastr: ToastrService,
     private _jogadoresService: JogadoresService,
     private _cardsFifaService: CardsFifaService,
     private _logGeracaoTimeService: LogGeracaoTimeService,
-    private _geracaoTimeService: GeracaoTimeService){ }
+    private _geracaoTimeService: GeracaoTimeService,
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef
+  ) { }
 
 
   ngOnInit(): void {
@@ -251,6 +257,67 @@ export class SorteioTimesComponent implements OnInit {
   public async salvarTimes(): Promise<void> {
     this._geracaoTimeService.atualizarTimesGerados(this.times).then(resultado => {
       this.toastr.success('Times salvos com sucesso!', '🚀Tudo certo!🚀');
+    });
+  }
+
+  // Novo método para enviar imagem para o webhook
+  public enviarImagemWebhook(): void {
+    this.enviandoImagemWebhook = true;
+    this.cdr.detectChanges();
+    setTimeout(() => {
+      this.gerarEEnviarImagemParaWebhook();
+    }, 100);
+  }
+
+  private async gerarEEnviarImagemParaWebhook(): Promise<void> {
+    let elementoEscolhido = window.innerWidth >= 601 ? 0 : 1;
+    const divs = document.querySelectorAll('.testec');
+    let div = divs[elementoEscolhido];
+    if (!div) {
+      this.toastr.error('Não foi possível encontrar o elemento para gerar a imagem.', 'Erro');
+      this.enviandoImagemWebhook = false;
+      return;
+    }
+    // Captura a imagem com qualidade otimizada
+    const canvas = await html2canvas(div as HTMLElement, {
+      scale: 1.5,
+      useCORS: true,
+      backgroundColor: '#d9d9d9',
+      windowWidth: 1200,
+      windowHeight: (div as HTMLElement).scrollHeight,
+      imageTimeout: 0,
+      logging: false
+    });
+    // Enviar para webhook
+    await this.enviarImagemParaWebhook(canvas);
+    this.enviandoImagemWebhook = false;
+  }
+
+  private async enviarImagemParaWebhook(canvas: HTMLCanvasElement): Promise<void> {
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(blob => {
+        if (!blob) {
+          this.toastr.error('Erro ao gerar imagem para envio', 'Erro');
+          this.enviandoImagemWebhook = false;
+          reject();
+          return;
+        }
+        const formData = new FormData();
+        formData.append('file', blob, 'sorteio.png');
+        this.http.post('https://meuzumcarfree01.duckdns.org/webhook/1b8eb739-a0de-44e4-a329-ba80b3407d63_escalacao', formData)
+          .subscribe({
+            next: () => {
+              this.toastr.success('Imagem enviada para o webhook!', 'Webhook');
+              this.enviandoImagemWebhook = false;
+              resolve();
+            },
+            error: () => {
+              this.toastr.error('Erro ao enviar imagem para o webhook', 'Erro');
+              this.enviandoImagemWebhook = false;
+              reject();
+            }
+          });
+      }, 'image/jpeg', 0.8);
     });
   }
 }
