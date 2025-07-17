@@ -289,6 +289,7 @@ export class SorteioTimesComponent implements OnInit {
       logging: false
     });
     // Enviar para webhook
+
     await this.enviarImagemParaWebhook(canvas);
     this.enviandoImagemWebhook = false;
   }
@@ -307,12 +308,12 @@ export class SorteioTimesComponent implements OnInit {
         this.http.post('https://meuzumcarfree01.duckdns.org/webhook/1b8eb739-a0de-44e4-a329-ba80b3407d63_escalacao', formData)
           .subscribe({
             next: () => {
-              this.toastr.success('Imagem enviada para o webhook!', 'Webhook');
+              this.toastr.info('⚠⚠⚠ Atenção jogador, a imagem já foi enviada ao grupo! Pode ir lá verificar', 'Bot da pelada:  imagem no grupo', { timeOut: 8000 });
               this.enviandoImagemWebhook = false;
               resolve();
             },
             error: () => {
-              this.toastr.error('Erro ao enviar imagem para o webhook', 'Erro');
+              this.toastr.error('Erro ao enviar imagem para o grupo da pelada', 'Erro');
               this.enviandoImagemWebhook = false;
               reject();
             }
